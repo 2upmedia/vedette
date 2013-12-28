@@ -1,4 +1,4 @@
-<?php
+<?php namespace Illuminate3\Vedette\Models;
 
 use Zizaco\Entrust\EntrustPermission;
 

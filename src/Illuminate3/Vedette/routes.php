@@ -47,17 +47,18 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 |--------------------------------------------------------------------------
 */
 // User reset routes
-Route::get('auth/reset/{token}', 'UsersController@getReset');
+Route::get('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersController@getReset');
 // User password reset
-Route::post('auth/reset/{token}', 'UsersController@postReset');
+Route::post('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersController@postReset');
 //:: User Account Routes ::
-Route::post('auth/{user}/edit', 'UsersController@postEdit');
+Route::post('auth/{user}/edit', 'Illuminate3\Vedette\Controllers\UsersController@postEdit');
 
 //:: User Account Routes ::
-Route::post('auth/login', 'UsersController@postLogin');
+Route::post('auth/login', 'Illuminate3\Vedette\Controllers\UsersController@postLogin');
+Route::get('auth/login', 'Illuminate3\Vedette\Controllers\UsersController@postLogin');
 
 # User RESTful Routes (Login, Logout, Register, etc)
-Route::controller('user', 'UsersController');
+Route::controller('user', 'Illuminate3\Vedette\Controllers\UsersController');
 
 //:: Application Routes ::
 

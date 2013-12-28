@@ -1,4 +1,4 @@
-<?php
+<?php namespace Illuminate3\Vedette\Models;
 
 class AssignedRoles extends Eloquent {
     protected $guarded = array();

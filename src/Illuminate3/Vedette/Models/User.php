@@ -1,4 +1,4 @@
-<?php
+<?php namespace Illuminate3\Vedette\Models;
 
 use Zizaco\Confide\ConfideUser;
 use Zizaco\Confide\Confide;
@@ -6,6 +6,7 @@ use Zizaco\Confide\ConfideEloquentRepository;
 use Zizaco\Entrust\HasRole;
 use Robbo\Presenter\PresentableInterface;
 use Carbon\Carbon;
+use Eloquent;
 
 class User extends ConfideUser implements PresentableInterface {
     use HasRole;
