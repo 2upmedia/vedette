@@ -54,11 +54,11 @@ Route::post('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersControll
 Route::post('auth/{user}/edit', 'Illuminate3\Vedette\Controllers\UsersController@postEdit');
 
 //:: User Account Routes ::
-Route::post('auth/login', 'Illuminate3\Vedette\Controllers\UsersController@postLogin');
-Route::get('auth/login', 'Illuminate3\Vedette\Controllers\UsersController@postLogin');
+//Route::post('auth/login', 'Illuminate3\Vedette\Controllers\UsersController@postLogin');
+//Route::get('auth/login', 'Illuminate3\Vedette\UsersController@getLogin');
 
 # User RESTful Routes (Login, Logout, Register, etc)
-Route::controller('user', 'Illuminate3\Vedette\Controllers\UsersController');
+//Route::controller('user', 'Illuminate3\Vedette\Controllers\UsersController');
 
 //:: Application Routes ::
 
@@ -82,7 +82,7 @@ Route::get(Config::get('vedette::vedette_settings.home_route'), array(
 | Login/Logout/Register Routes
 |--------------------------------------------------------------------------
 */
-/*
+
 Route::group(array(
 	'prefix' => Config::get('vedette::vedette_settings.prefix_auth')),
 	function()
@@ -118,6 +118,10 @@ Route::group(array(
 	Route::post('login', array(
 		'as'   => 'vedette.login',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postLogin'
+	));
+	Route::get('/', array(
+		'as'   => 'vedette/login',
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
 	));
 
 // Logout/Sign Out
@@ -158,7 +162,7 @@ Route::group(array(
 		));
 
 });
-*/
+
 
 /*
 |--------------------------------------------------------------------------

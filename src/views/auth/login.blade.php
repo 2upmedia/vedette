@@ -1,60 +1,65 @@
-@extends('site.layouts.default')
+@extends(Config::get('vedette::vedette_views.layout'))
 
-{{-- Web site Title --}}
+{{-- Include Page CSS --}}
+@section('css')
+@stop
+
+{{-- Include Page JS --}}
+@section('js')
+@stop
+
+{{-- Browser Title --}}
+@section('page_title')
+	- {{ trans('lingos::auth.sign_in') }}
+@stop
+
+{{-- Title --}}
 @section('title')
-{{{ Lang::get('user/user.login') }}} ::
-@parent
+	<i class="fa fa-sign-in fa-lg"></i>
+	{{ trans('lingos::auth.sign_in') }}
 @stop
 
 {{-- Content --}}
 @section('content')
-<div class="page-header">
-	<h1>Login into your account</h1>
-</div>
+
+@if ( Session::get('error') )
+	<div class="alert alert-danger">{{ Session::get('error') }}</div>
+@endif
+
+@if ( Session::get('notice') )
+	<div class="alert">{{ Session::get('notice') }}</div>
+@endif
+
 <form class="form-horizontal" method="POST" action="{{ URL::to('user/login') }}" accept-charset="UTF-8">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    <fieldset>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="email">{{ Lang::get('confide::confide.username_e_mail') }}</label>
-            <div class="col-md-10">
-                <input class="form-control" tabindex="1" placeholder="{{ Lang::get('confide::confide.username_e_mail') }}" type="text" name="email" id="email" value="{{ Input::old('email') }}">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label" for="password">
-                {{ Lang::get('confide::confide.password') }}
-            </label>
-            <div class="col-md-10">
-                <input class="form-control" tabindex="2" placeholder="{{ Lang::get('confide::confide.password') }}" type="password" name="password" id="password">
-            </div>
-        </div>
+<input type="hidden" name="_token" value="{{ csrf_token() }}">
+<fieldset>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="checkbox">
-                    <label for="remember">{{ Lang::get('confide::confide.login.remember') }}
-                        <input type="hidden" name="remember" value="0">
-                        <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
-                    </label>
-                </div>
-            </div>
-        </div>
+	<div class="input-group margin-bottom-lg">
+		<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+		<input class="form-control" type="text" name="email" id="email" placeholder="{{ trans('lingos::general.email') }}" value="{{ Input::old('email') }}"  tabindex="1">
+	</div>
 
-        @if ( Session::get('error') )
-        <div class="alert alert-danger">{{ Session::get('error') }}</div>
-        @endif
+	<div class="input-group margin-bottom-md">
+		<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+		<input class="form-control"  type="password" name="password" id="password" placeholder="{{ trans('lingos::auth.password') }}" value="{{ Input::old('email') }}" tabindex="2">
+	</div>
 
-        @if ( Session::get('notice') )
-        <div class="alert">{{ Session::get('notice') }}</div>
-        @endif
+	<div class="checkbox margin-bottom-lg">
+		<label for="remember">{{ Lang::get('confide::confide.login.remember') }}
+			<input type="hidden" name="remember" value="0">
+			<input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
+		</label>
+	</div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button tabindex="3" type="submit" class="btn btn-primary">{{ Lang::get('confide::confide.login.submit') }}</button>
-                <a class="btn btn-default" href="forgot">{{ Lang::get('confide::confide.login.forgot_password') }}</a>
-            </div>
-        </div>
-    </fieldset>
+	<div class="row btn-toolbar" role="toolbar">
+		<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ trans('lingos::button.sign_in') }}" tabindex="3">
+		<br>
+		<a class="btn btn-warning" href="{{ route('vedette.home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
+		<a class="btn btn-primary" href="{{ route('vedette.register') }}"><i class="fa fa-plus-circle"></i>{{ trans('lingos::button.register') }}</a>
+		<a class="btn btn-info" href="{{ route('vedette.forgot-password') }}"><i class="fa fa-external-link"></i>{{ trans('lingos::button.forgot_password') }}</a>
+	</div>
+
+</fieldset>
 </form>
 
 @stop

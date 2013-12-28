@@ -34,6 +34,7 @@
 
 <!-- CSS ================================================== -->
 @section('css')
+{{ Basset::show('main.css') }}
 @show
 
 </head>
@@ -50,29 +51,53 @@
 		<a class="navbar-brand" href="#">{{ $vedette['site_name'] }}</a>
 	</div>
 
-<ul class="nav navbar-nav navbar-right">
-	@if (Sentry::check())
+<ul class="nav navbar-nav pull-right">
+	@if (Auth::check())
+	<li><a href="{{{ URL::to('admin') }}}">Admin Panel</a></li>
+	<li><a href="{{{ URL::to('user') }}}">{{{ Auth::user()->username }}}</a></li>
+	<li><a href="{{{ URL::to('user/logout') }}}">Logout</a></li>
+
 	<li class="dropdown{{ (Request::is('auth*') ? ' active' : '') }}">
 		<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{{ route('vedette.home') }}" data-hover="dropdown">
 			<i class="fa fa-user"></i>
-			{{ Sentry::getUser()->first_name }}
+			{{ Auth::user()->username }}
 			<b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-			@if(Sentry::getUser()->hasAccess('admin'))
-				<li><a href="{{ route('vedette.users') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::general.users') }}</a></li>
-				<li><a href="{{ route('vedette.groups') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.groups') }}</a></li>
-				<li><a href="{{ route('vedette.permissions') }}"><i class="fa fa-wrench"></i>{{ trans('lingos::sentry.permissions') }}</a></li>
-				<li><a href="{{ route('vedette.admin') }}"><i class="fa fa-gear"></i>{{ trans('lingos::general.administration') }}</a></li>
-			@endif
+	@if (Auth::user()->hasRole('admin'))
+				<li><a href="{{ route('vedette.users') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::general.users') }}</a></li>
+				<li><a href="{{ route('vedette.groups') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.groups') }}</a></li>
+				<li><a href="{{ route('vedette.permissions') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.permissions') }}</a></li>
+				<li><a href="{{ route('vedette.admin') }}"><i class="fa fa-gear"></i>{{ Lang::get('lingos::general.administration') }}</a></li>
+	@endif
 			<li class="divider"></li>
-			<li><a href="{{ route('vedette.logout') }}"><i class="fa fa-power-off"></i>{{ trans('lingos::auth.log_out') }}</a></li>
+			<li><a href="{{ route('vedette.logout') }}"><i class="fa fa-power-off"></i>{{ Lang::get('lingos::auth.log_out') }}</a></li>
 		</ul>
 	</li>
+
+
 	@else
-		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('vedette.login') }}">{{ trans('lingos::auth.sign_in') }}</a></li>
-		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('vedette.register') }}">{{ trans('lingos::auth.sign_up') }}</a></li>
+		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('vedette.login') }}">{{ Lang::get('lingos::auth.sign_in') }}</a></li>
+		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('vedette.register') }}">{{ Lang::get('lingos::auth.sign_up') }}</a></li>
 	@endif
+</ul>
+<ul class="nav navbar-nav navbar-right">
+	<li class="dropdown{{ (Request::is('auth*') ? ' active' : '') }}">
+		<a class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="{{ route('vedette.home') }}" data-hover="dropdown">
+			<i class="fa fa-user"></i>
+			<b class="caret"></b>
+		</a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				<li><a href="{{ route('vedette.users') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::general.users') }}</a></li>
+				<li><a href="{{ route('vedette.groups') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.groups') }}</a></li>
+				<li><a href="{{ route('vedette.permissions') }}"><i class="fa fa-wrench"></i>{{ Lang::get('lingos::sentry.permissions') }}</a></li>
+				<li><a href="{{ route('vedette.admin') }}"><i class="fa fa-gear"></i>{{ Lang::get('lingos::general.administration') }}</a></li>
+			<li class="divider"></li>
+			<li><a href="{{ route('vedette.logout') }}"><i class="fa fa-power-off"></i>{{ Lang::get('lingos::auth.log_out') }}</a></li>
+		</ul>
+	</li>
+		<li {{ (Request::is('auth/login') ? 'class="active"' : '') }}><a href="{{ route('vedette.login') }}">{{ Lang::get('lingos::auth.sign_in') }}</a></li>
+		<li {{ (Request::is('auth/register') ? 'class="active"' : '') }}><a href="{{ route('vedette.register') }}">{{ Lang::get('lingos::auth.sign_up') }}</a></li>
 </ul>
 
 	</div><!--/.nav-collapse -->

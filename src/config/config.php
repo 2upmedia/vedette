@@ -34,7 +34,8 @@ return array(
 'vedette_views' => array(
 
 	// The layoiut to use : change to what matches your application
-	'layout'				=> 'vedette::layouts',
+//	'layout'				=> 'vedette::layouts',
+'layout' => 'frontend/layouts/default',
 
 	// Dashboard area : change to something more appropriate or build out what is provided
 	'dashboard'				=> 'vedette::auth.index',

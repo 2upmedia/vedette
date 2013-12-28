@@ -1,5 +1,7 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
+use User;
+
 class UsersController extends BaseController {
 
     /**
@@ -152,7 +154,12 @@ class UsersController extends BaseController {
      */
     public function getLogin()
     {
-        $user = Auth::user();
+/* ----------------------------------------------------------------------------------------------------- */
+echo "<pre>";
+var_dump($params);
+echo "</pre>";
+exit();
+/* ----------------------------------------------------------------------------------------------------- */        $user = Auth::user();
         if(!empty($user->id)){
             return Redirect::to('/');
         }

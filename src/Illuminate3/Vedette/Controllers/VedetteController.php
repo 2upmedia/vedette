@@ -1,5 +1,6 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
+use User;
 use View;
 use Config;
 use Input;
@@ -528,12 +529,12 @@ class VedetteController extends BaseController {
      */
     public function getLogin()
     {
-        $user = Auth::user();
         if(!empty($user->id)){
             return Redirect::to('/');
         }
 
-        return View::make('site/user/login');
+		return View::make(Config::get('vedette::vedette_views.login'));
+//        return View::make('site/user/login');
     }
 
     /**

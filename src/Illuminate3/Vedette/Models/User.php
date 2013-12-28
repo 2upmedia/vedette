@@ -10,7 +10,12 @@ use Eloquent;
 
 class User extends ConfideUser implements PresentableInterface {
     use HasRole;
-
+/* ----------------------------------------------------------------------------------------------------- */
+echo "<pre>";
+var_dump($params);
+echo "</pre>";
+exit();
+/* ----------------------------------------------------------------------------------------------------- */
 	/**
 	 * The database table used by the model.
 	 *
