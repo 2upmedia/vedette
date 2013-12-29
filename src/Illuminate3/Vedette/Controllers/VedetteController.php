@@ -1,6 +1,7 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
-use User;
+//use User;
+use Illuminate3\Vedette\Models\User as User;
 use Confide;
 use View;
 use Config;
@@ -446,7 +447,7 @@ class VedetteController extends BaseController {
         if ( $this->user->id )
         {
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-            return Redirect::to('user/login111')
+            return Redirect::to('user/login1112')
                 ->with( 'notice', Lang::get('user/user.user_account_created') );
         }
         else
@@ -579,7 +580,7 @@ return Redirect::intended(Config::get('vedette::vedette_settings.home_route'))->
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-            return Redirect::to('user/login1111')
+            return Redirect::to('user/login11113')
                 ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }
@@ -621,7 +622,7 @@ return Redirect::intended(Config::get('vedette::vedette_settings.home_route'))->
     {
         if( Confide::forgotPassword( Input::get( 'email' ) ) )
         {
-            return Redirect::to('user/login111')
+            return Redirect::to('user/login11144')
                 ->with( 'notice', Lang::get('confide::confide.alerts.password_forgot') );
         }
         else
@@ -659,7 +660,7 @@ return Redirect::intended(Config::get('vedette::vedette_settings.home_route'))->
         // By passing an array with the token, password and confirmation
         if( Confide::resetPassword( $input ) )
         {
-            return Redirect::to('user/login111')
+            return Redirect::to('user/login1115')
             ->with( 'notice', Lang::get('confide::confide.alerts.password_reset') );
         }
         else

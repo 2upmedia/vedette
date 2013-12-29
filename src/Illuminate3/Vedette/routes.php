@@ -3,6 +3,26 @@
 
 /*
 |--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the Closure to execute when that URI is requested.
+|
+*/
+
+/** ------------------------------------------
+ *  Route model binding
+ *  ------------------------------------------
+ */
+Route::model('user', 'User');
+//Route::model('comment', 'Comment');
+//Route::model('post', 'Post');
+Route::model('role', 'Role');
+
+/*
+|--------------------------------------------------------------------------
 | Route constraint patterns
 |--------------------------------------------------------------------------
 */
@@ -18,15 +38,21 @@ Route::pattern('token', '[0-9a-z]+');
 */
 Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 {
-/*
+
 	# User Management
-	Route::get('{user}/show', 'AdminUsersController@getShow');
-	Route::get('{user}/edit', 'AdminUsersController@getEdit');
-	Route::post('{user}/edit', 'AdminUsersController@postEdit');
-	Route::get('{user}/delete', 'AdminUsersController@getDelete');
-	Route::post('{user}/delete', 'AdminUsersController@postDelete');
-	Route::controller('users', 'AdminUsersController');
-*/
+	Route::get('users/{user}/show', 'Illuminate3\Vedette\Controllers\AdminUsersController@getShow');
+	Route::get('users/{user}/edit', 'Illuminate3\Vedette\Controllers\AdminUsersController@getEdit');
+	Route::post('users/{user}/edit', 'Illuminate3\Vedette\Controllers\AdminUsersController@postEdit');
+	Route::get('users/{user}/delete', 'Illuminate3\Vedette\Controllers\AdminUsersController@getDelete');
+	Route::post('users/{user}/delete', 'Illuminate3\Vedette\Controllers\AdminUsersController@postDelete');
+	Route::controller('users', 'Illuminate3\Vedette\Controllers\AdminUsersController');
+	Route::get('users', array(
+		'as'     => 'vedette.admin-users',
+		'uses'   => 'Illuminate3\Vedette\Controllers\AdminUsersController@getIndex',
+		'before' => 'auth.vedette:users.view'
+	));
+
+
 /*
 	# User Role Management
 	Route::get('roles/{role}/show', 'AdminRolesController@getShow');

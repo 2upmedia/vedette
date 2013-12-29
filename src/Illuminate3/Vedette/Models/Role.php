@@ -2,6 +2,7 @@
 
 use Zizaco\Entrust\EntrustRole;
 use Robbo\Presenter\PresentableInterface;
+use Eloquent;
 
 class Role extends EntrustRole implements PresentableInterface
 {

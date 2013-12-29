@@ -90,8 +90,10 @@ class User extends ConfideUser implements PresentableInterface {
         if(empty($user->id) && ! $ifValid) // Not logged in redirect, set session.
         {
             Session::put('loginRedirect', $redirect);
+
             $redirectTo = Redirect::to('user/login1111')
                 ->with( 'notice', Lang::get('user/user.login_first') );
+
         }
         elseif(!empty($user->id) && $ifValid) // Valid user, we want to redirect.
         {

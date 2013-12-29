@@ -1,7 +1,37 @@
-@extends('admin.layouts.default')
+@extends(Config::get('vedette::vedette_views.layout'))
+
+@section('css')
+@stop
+
+@section('js')
+	<script type="text/javascript">
+		var oTable;
+		$(document).ready(function() {
+				oTable = $('#users').dataTable( {
+				"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+				"sPaginationType": "bootstrap",
+				"oLanguage": {
+					"sLengthMenu": "_MENU_ records per page"
+				},
+				"bProcessing": true,
+		        "bServerSide": true,
+		        "sAjaxSource": "{{ URL::to('admin/users/data') }}",
+		        "fnDrawCallback": function ( oSettings ) {
+	           		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+	     		}
+			});
+		});
+	</script>
+@stop
 
 {{-- Web site Title --}}
+@section('page_title')
+	- {{ trans('lingos::auth.sign_in') }}
+@stop
+
 @section('title')
+	<i class="fa fa-sign-in fa-lg"></i>
+	{{ trans('lingos::auth.sign_in') }}
 	{{{ $title }}} :: @parent
 @stop
 
@@ -31,26 +61,18 @@
 		<tbody>
 		</tbody>
 	</table>
+			@foreach ($users as $user)
+			<tr>
+				<td>
+					{{ $user->username }}
+				</td>
+				<td>
+					{{ $user->email }}
+				</td>
+			</tr>
+			@endforeach
 @stop
 
 {{-- Scripts --}}
 @section('scripts')
-	<script type="text/javascript">
-		var oTable;
-		$(document).ready(function() {
-				oTable = $('#users').dataTable( {
-				"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {
-					"sLengthMenu": "_MENU_ records per page"
-				},
-				"bProcessing": true,
-		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('admin/users/data') }}",
-		        "fnDrawCallback": function ( oSettings ) {
-	           		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-	     		}
-			});
-		});
-	</script>
 @stop

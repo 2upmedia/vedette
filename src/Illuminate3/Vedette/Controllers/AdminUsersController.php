@@ -1,5 +1,24 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
+use Illuminate3\Vedette\Models\User as User;
+//use User;
+use Illuminate3\Vedette\Models\Role as Role;
+use Illuminate3\Vedette\Models\Permission as Permission;
+//use User;
+use Confide;
+use View;
+use Config;
+use Input;
+//use Sentry;
+use Redirect;
+use Lang;
+use Event;
+use Validator;
+use Zizaco\Entrust\EntrustRole;
+//use Zizaco\Entrust\HasRole;
+//use Role;
+use Datatables;
+
 class AdminUsersController extends AdminController {
 
 
@@ -27,6 +46,7 @@ class AdminUsersController extends AdminController {
      * @param Role $role
      * @param Permission $permission
      */
+
     public function __construct(User $user, Role $role, Permission $permission)
     {
         parent::__construct();
@@ -42,14 +62,22 @@ class AdminUsersController extends AdminController {
      */
     public function getIndex()
     {
-        // Title
         $title = Lang::get('admin/users/title.user_management');
 
         // Grab all the users
-        $users = $this->user;
+//        $users = $this->user->get();
 
         // Show the page
-        return View::make('admin/users/index', compact('users', 'title'));
+//        return View::make('admin/users/index', compact('users', 'title'));
+//        return View::make(Config::get('vedette::vedette_views.users_index'), compact('users', 'title'));
+
+		return View::make(Config::get('vedette::vedette_views.users_index'), [
+//			'accounts' => $this->repository->findAll()
+			'users' => $this->user->all()
+//		]);
+		], compact('users', 'title'));
+
+
     }
 
     /**
@@ -280,9 +308,14 @@ class AdminUsersController extends AdminController {
      */
     public function getData()
     {
+
+
         $users = User::leftjoin('assigned_roles', 'assigned_roles.user_id', '=', 'users.id')
                     ->leftjoin('roles', 'roles.id', '=', 'assigned_roles.role_id')
                     ->select(array('users.id', 'users.username','users.email', 'roles.name as rolename', 'users.confirmed', 'users.created_at'));
+
+//        $users = $this->user->get();
+
 
         return Datatables::of($users)
         // ->edit_column('created_at','{{{ Carbon::now()->diffForHumans(Carbon::createFromFormat(\'Y-m-d H\', $test)) }}}')
@@ -292,14 +325,14 @@ class AdminUsersController extends AdminController {
                         @else
                             No
                         @endif')
-
+/*
         ->add_column('actions', '<a href="{{{ URL::to(\'admin/users/\' . $id . \'/edit\' ) }}}" class="iframe btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
                                 @if($username == \'admin\')
                                 @else
                                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="iframe btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
                                 @endif
             ')
-
+*/
         ->remove_column('id')
 
         ->make();
