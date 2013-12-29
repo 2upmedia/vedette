@@ -37,7 +37,7 @@ Route::filter('auth', function()
 {
 	if (Auth::guest()) {
         Session::put('loginRedirect', Request::url());
-        return Redirect::to('user/login/');
+        return Redirect::to('user/login111/');
     }
 });
 
@@ -59,7 +59,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('user/login/');
+	if (Auth::check()) return Redirect::to('user/login1111/');
 });
 
 /*
@@ -75,29 +75,11 @@ Route::filter('guest', function()
 Entrust::routeNeedsRole( 'admin*', array('admin'), Redirect::to('/') );
 
 // Check for permissions on admin actions
-Entrust::routeNeedsPermission( 'admin/blogs*', 'manage_blogs', Redirect::to('/admin') );
-Entrust::routeNeedsPermission( 'admin/comments*', 'manage_comments', Redirect::to('/admin') );
+//Entrust::routeNeedsPermission( 'admin/blogs*', 'manage_blogs', Redirect::to('/admin') );
+//Entrust::routeNeedsPermission( 'admin/comments*', 'manage_comments', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/users*', 'manage_users', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/admin') );
 
-/*
-|--------------------------------------------------------------------------
-| CSRF Protection Filter
-|--------------------------------------------------------------------------
-|
-| The CSRF filter is responsible for protecting your application against
-| cross-site request forgery attacks. If this special token in a user
-| session does not match the one given in this request, we'll bail.
-|
-*/
-
-Route::filter('csrf', function()
-{
-	if (Session::getToken() != Input::get('csrf_token') &&  Session::getToken() != Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
-});
 
 /*
 |--------------------------------------------------------------------------

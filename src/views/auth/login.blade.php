@@ -30,8 +30,13 @@
 	<div class="alert">{{ Session::get('notice') }}</div>
 @endif
 
-<form class="form-horizontal" method="POST" action="{{ URL::to('user/login') }}" accept-charset="UTF-8">
-<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+{{ Form::open(array(
+	'url' => route('vedette.login'),
+	'method' => 'post',
+	'id' => 'login-form'
+	))
+}}
 <fieldset>
 
 	<div class="input-group margin-bottom-lg">
@@ -47,12 +52,12 @@
 	<div class="checkbox margin-bottom-lg">
 		<label for="remember">{{ Lang::get('confide::confide.login.remember') }}
 			<input type="hidden" name="remember" value="0">
-			<input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
+			<input tabindex="3" type="checkbox" name="remember" id="remember" value="1">
 		</label>
 	</div>
 
 	<div class="row btn-toolbar" role="toolbar">
-		<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ trans('lingos::button.sign_in') }}" tabindex="3">
+		<input class="btn btn-lg btn-success btn-block" type="submit" value="{{ trans('lingos::button.sign_in') }}" tabindex="4">
 		<br>
 		<a class="btn btn-warning" href="{{ route('vedette.home') }}"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
 		<a class="btn btn-primary" href="{{ route('vedette.register') }}"><i class="fa fa-plus-circle"></i>{{ trans('lingos::button.register') }}</a>
@@ -60,6 +65,6 @@
 	</div>
 
 </fieldset>
-</form>
+{{ Form::close() }}
 
 @stop

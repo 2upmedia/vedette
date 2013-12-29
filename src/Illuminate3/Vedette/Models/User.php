@@ -10,12 +10,7 @@ use Eloquent;
 
 class User extends ConfideUser implements PresentableInterface {
     use HasRole;
-/* ----------------------------------------------------------------------------------------------------- */
-echo "<pre>";
-var_dump($params);
-echo "</pre>";
-exit();
-/* ----------------------------------------------------------------------------------------------------- */
+
 	/**
 	 * The database table used by the model.
 	 *
@@ -95,7 +90,7 @@ exit();
         if(empty($user->id) && ! $ifValid) // Not logged in redirect, set session.
         {
             Session::put('loginRedirect', $redirect);
-            $redirectTo = Redirect::to('user/login')
+            $redirectTo = Redirect::to('user/login1111')
                 ->with( 'notice', Lang::get('user/user.login_first') );
         }
         elseif(!empty($user->id) && $ifValid) // Valid user, we want to redirect.

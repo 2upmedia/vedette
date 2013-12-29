@@ -1,6 +1,7 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
 use User;
+use Confide;
 use View;
 use Config;
 use Input;
@@ -445,7 +446,7 @@ class VedetteController extends BaseController {
         if ( $this->user->id )
         {
             // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-            return Redirect::to('user/login')
+            return Redirect::to('user/login111')
                 ->with( 'notice', Lang::get('user/user.user_account_created') );
         }
         else
@@ -523,19 +524,20 @@ class VedetteController extends BaseController {
     }
 
 
-    /**
-     * Displays the login form
-     *
-     */
-    public function getLogin()
-    {
-        if(!empty($user->id)){
-            return Redirect::to('/');
-        }
+	/**
+	 * Displays the login form
+	 *
+	 */
+	public function getLogin()
+	{
 
-		return View::make(Config::get('vedette::vedette_views.login'));
-//        return View::make('site/user/login');
-    }
+//		if ( Auth::check() ) {
+		if ( !empty($user->id) ) {
+//			return Redirect::to('/');
+			return Redirect::intended( Config::get('vedette::vedette_settings.home_route') );
+		}
+		return View::make( Config::get('vedette::vedette_views.login') );
+	}
 
     /**
      * Attempt to do login
@@ -560,9 +562,11 @@ class VedetteController extends BaseController {
             if (!empty($r))
             {
                 Session::forget('loginRedirect');
-                return Redirect::to($r);
+//                return Redirect::to($r);
+return Redirect::intended($r)->with('success', trans('lingos::auth.success.login'));
             }
-            return Redirect::to('/');
+//            return Redirect::to('/');
+return Redirect::intended(Config::get('vedette::vedette_settings.home_route'))->with('success', trans('lingos::auth.success.login'));
         }
         else
         {
@@ -575,7 +579,7 @@ class VedetteController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-            return Redirect::to('user/login')
+            return Redirect::to('user/login1111')
                 ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }
@@ -590,12 +594,12 @@ class VedetteController extends BaseController {
     {
         if ( Confide::confirm( $code ) )
         {
-            return Redirect::to('user/login')
+            return Redirect::to('vedette.login')
                 ->with( 'notice', Lang::get('confide::confide.alerts.confirmation') );
         }
         else
         {
-            return Redirect::to('user/login')
+            return Redirect::to('vedette.home')
                 ->with( 'error', Lang::get('confide::confide.alerts.wrong_confirmation') );
         }
     }
@@ -617,7 +621,7 @@ class VedetteController extends BaseController {
     {
         if( Confide::forgotPassword( Input::get( 'email' ) ) )
         {
-            return Redirect::to('user/login')
+            return Redirect::to('user/login111')
                 ->with( 'notice', Lang::get('confide::confide.alerts.password_forgot') );
         }
         else
@@ -655,7 +659,7 @@ class VedetteController extends BaseController {
         // By passing an array with the token, password and confirmation
         if( Confide::resetPassword( $input ) )
         {
-            return Redirect::to('user/login')
+            return Redirect::to('user/login111')
             ->with( 'notice', Lang::get('confide::confide.alerts.password_reset') );
         }
         else
@@ -673,8 +677,8 @@ class VedetteController extends BaseController {
     public function getLogout()
     {
         Confide::logout();
-
-        return Redirect::to('/');
+//        return Redirect::to('/');
+return Redirect::route('vedette.home')->with('success', trans('lingos::auth.success.logout'));
     }
 
     /**
