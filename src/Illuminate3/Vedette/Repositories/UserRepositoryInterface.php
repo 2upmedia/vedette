@@ -1,9 +1,9 @@
 <?php namespace Illuminate3\Vedette\Repositories;
 
 /**
- * Account Repository Interface
+ * User Repository Interface
  */
-interface AccountRepositoryInterface {
+interface UserRepositoryInterface {
 
 
   public function findAll();
@@ -17,13 +17,13 @@ interface AccountRepositoryInterface {
   public function destroyById($id);
 
 	/**
-	 * Save account
+	 * Save user
 	 *
 	 * @param  array  $attributes [description]
-	 * @param  mixed $account null or Account
-	 * @return mixed boolean false or Account
+	 * @param  mixed $user null or User
+	 * @return mixed boolean false or User
 	 */
-	public function save(array $attributes, $account = null);
+	public function save(array $attributes, $user = null);
 
 
 

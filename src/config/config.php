@@ -2,6 +2,8 @@
 
 return array(
 
+'available_language' => array('en', 'pt', 'es'),
+
 /*
 |--------------------------------------------------------------------------
 | General configs used for naming conventions
@@ -39,6 +41,8 @@ return array(
 
 	// Dashboard area : change to something more appropriate or build out what is provided
 	'dashboard'				=> 'vedette::auth.index',
+	'datatable'				=> 'vedette::datatable',
+	'datalist'				=> 'vedette::list',
 
 	// Following views won't probably be needed to be over ridden but just in case
 
@@ -46,7 +50,7 @@ return array(
 	'auth'					=> 'vedette::auth.index',
 	'login'					=> 'vedette::auth.login',
 	'register'				=> 'vedette::auth.register',
-	'forgot'				=> 'vedette::auth.forgot-password',
+	'forgot'				=> 'vedette::auth.forgot',
 	'forgot_confirm'		=> 'vedette::auth.forgot-password-confirm',
 
 	// Users views

@@ -4,6 +4,10 @@ use Controller;
 use View;
 use Config;
 
+use Zizaco\Entrust\EntrustRole;
+use Zizaco\Entrust\HasRole;
+use Auth;
+
 class BaseController extends Controller {
 
 	/**
@@ -14,7 +18,7 @@ class BaseController extends Controller {
 	 */
 	public function __construct()
 	{
-		$this->beforeFilter('csrf', array('on' => 'post'));
+		$this->beforeFilter( 'csrf', array('on' => 'post') );
 	}
 
 	/**
@@ -24,11 +28,11 @@ class BaseController extends Controller {
 	 */
 	protected function setupLayout()
 	{
-		if ( ! is_null($this->layout))
+		if ( ! is_null($this->layout) )
 		{
 			$this->layout = View::make($this->layout);
 		}
-		//share the config option to all the views
+	//share the config option to all the views
 		View::share('vedette', Config::get('vedette::vedette_config'));
 	}
 

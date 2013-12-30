@@ -1,6 +1,6 @@
-<?php namespace Illuminate3\Konto\Repositories\Account;
+<?php namespace Illuminate3\Vedette\Repositories;
 
-use Illuminate3\Konto\Models\Account as Account;
+use Illuminate3\Vedette\Models\Account as Account;
 //use Illuminate3\Gengo\Models\Accountname as AccountName;
 
 class EloquentAccountRepository implements AccountRepositoryInterface {

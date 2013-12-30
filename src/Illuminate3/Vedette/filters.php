@@ -1,5 +1,6 @@
 <?php
 use Zizaco\Entrust\EntrustRole;
+use Zizaco\Entrust\HasRole;
 use Illuminate3\Vedette\Models\User as User;
 
 /*
@@ -41,7 +42,7 @@ Route::filter('auth', function()
         Session::put('loginRedirect', Request::url());
 
 //'auth.users.index'
-return Redirect::to('vedette/login');
+return Redirect::to(Config::get('vedette::vedette_settings.prefix_auth') . '/login');
 //        return Redirect::to('user/login111/');
 
     }
@@ -78,12 +79,12 @@ Route::filter('guest', function()
 */
 
 // Check for role on all admin routes
-//Entrust::routeNeedsRole( 'admin*', array('admin'), Redirect::to('/') );
+Entrust::routeNeedsRole( 'admin*', array('admin'), Redirect::to('/') );
 
 // Check for permissions on admin actions
 //Entrust::routeNeedsPermission( 'admin/blogs*', 'manage_blogs', Redirect::to('/admin') );
 //Entrust::routeNeedsPermission( 'admin/comments*', 'manage_comments', Redirect::to('/admin') );
-//Entrust::routeNeedsPermission( 'admin/users*', 'manage_users', Redirect::to('/admin') );
+Entrust::routeNeedsPermission( 'admin/users*', 'manage_users', Redirect::to('/admin') );
 Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/admin') );
 
 
@@ -99,13 +100,13 @@ Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/ad
 Route::filter('detectLang',  function($route, $request, $lang = 'auto')
 {
 
-    if($lang != "auto" && in_array($lang , Config::get('app.available_language')))
+    if($lang != "auto" && in_array($lang , Config::get('vedette::available_language')))
     {
         Config::set('app.locale', $lang);
     }else{
         $browser_lang = !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? strtok(strip_tags($_SERVER['HTTP_ACCEPT_LANGUAGE']), ',') : '';
         $browser_lang = substr($browser_lang, 0,2);
-        $userLang = (in_array($browser_lang, Config::get('app.available_language'))) ? $browser_lang : Config::get('app.locale');
+        $userLang = (in_array($browser_lang, Config::get('vedette::available_language'))) ? $browser_lang : Config::get('app.locale');
         Config::set('app.locale', $userLang);
         App::setLocale($userLang);
     }

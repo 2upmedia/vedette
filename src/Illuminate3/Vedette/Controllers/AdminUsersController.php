@@ -18,6 +18,8 @@ use Zizaco\Entrust\EntrustRole;
 //use Zizaco\Entrust\HasRole;
 //use Role;
 use Datatables;
+use Datatable;
+use Illuminate3\Vedette\Repositories\UserRepositoryInterface;
 
 class AdminUsersController extends AdminController {
 
@@ -306,7 +308,7 @@ class AdminUsersController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function getData()
+    public function getData111()
     {
 
 
@@ -325,16 +327,72 @@ class AdminUsersController extends AdminController {
                         @else
                             No
                         @endif')
-/*
+
         ->add_column('actions', '<a href="{{{ URL::to(\'admin/users/\' . $id . \'/edit\' ) }}}" class="iframe btn btn-xs btn-default">{{{ Lang::get(\'button.edit\') }}}</a>
                                 @if($username == \'admin\')
                                 @else
                                     <a href="{{{ URL::to(\'admin/users/\' . $id . \'/delete\' ) }}}" class="iframe btn btn-xs btn-danger">{{{ Lang::get(\'button.delete\') }}}</a>
                                 @endif
             ')
-*/
+
         ->remove_column('id')
 
         ->make();
     }
+
+public function getDatatable()
+    {
+    	$query = DB::table('clients')
+    				->join('contacts', 'contacts.client_id', '=', 'clients.id')
+    				->where('clients.account_id', '=', Auth::user()->account_id)
+    				->where('clients.deleted_at', '=', null)
+    				->where('contacts.is_primary', '=', true)
+    				->select('clients.public_id','clients.name','contacts.first_name','contacts.last_name','clients.balance','clients.last_login','clients.created_at','clients.work_phone','contacts.email','clients.currency_id');
+
+		$filter = Input::get('sSearch');
+    	if ($filter)
+    	{
+    		$query->where(function($query) use ($filter)
+            {
+            	$query->where('clients.name', 'like', '%'.$filter.'%')
+            		  ->orWhere('contacts.first_name', 'like', '%'.$filter.'%')
+            		  ->orWhere('contacts.last_name', 'like', '%'.$filter.'%')
+            		  ->orWhere('contacts.email', 'like', '%'.$filter.'%');
+            });
+    	}
+
+    	//$query->get();
+    	//dd(DB::getQueryLog());
+
+        return Datatable::query($query)
+    	    ->addColumn('checkbox', function($model) { return '<input type="checkbox" name="ids[]" value="' . $model->public_id . '">'; })
+    	    ->addColumn('name', function($model) { return link_to('clients/' . $model->public_id, $model->name); })
+    	    ->addColumn('first_name', function($model) { return $model->first_name . ' ' . $model->last_name; })
+    	    ->addColumn('created_at', function($model) { return Utils::timestampToDateString(strtotime($model->created_at)); })
+    	    ->addColumn('email', function($model) { return $model->email ? HTML::mailto($model->email, $model->email) : ''; })
+    	    ->addColumn('work_phone', function($model) { return Utils::formatPhoneNumber($model->work_phone); })
+    	    ->addColumn('last_login', function($model) { return Utils::timestampToDateString($model->last_login); })
+    	    ->addColumn('balance', function($model) { return Utils::formatMoney($model->balance, $model->currency_id); })
+    	    ->addColumn('dropdown', function($model)
+    	    {
+    	    	return '<div class="btn-group tr-action" style="visibility:hidden;">
+  							<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+    							Select <span class="caret"></span>
+  							</button>
+  							<ul class="dropdown-menu" role="menu">
+  							<li><a href="' . URL::to('clients/'.$model->public_id.'/edit') . '">Edit Client</a></li>
+						    <li class="divider"></li>
+						    <li><a href="' . URL::to('invoices/create/'.$model->public_id) . '">New Invoice</a></li>
+						    <li><a href="' . URL::to('payments/create/'.$model->public_id) . '">New Payment</a></li>
+						    <li><a href="' . URL::to('credits/create/'.$model->public_id) . '">New Credit</a></li>
+						    <li class="divider"></li>
+						    <li><a href="javascript:archiveEntity(' . $model->public_id. ')">Archive Client</a></li>
+						    <li><a href="javascript:deleteEntity(' . $model->public_id. ')">Delete Client</a></li>
+						  </ul>
+						</div>';
+    	    })
+    	    ->orderColumns('name','first_name','balance','last_login','created_at','email','phone')
+    	    ->make();
+    }
+
 }

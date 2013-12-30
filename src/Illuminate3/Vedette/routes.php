@@ -1,5 +1,7 @@
 <?php
 
+//use Zizaco\Entrust\EntrustRole;
+//use Zizaco\Entrust\HasRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +68,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 //	Route::controller('/', 'AdminDashboardController');
 });
 
+Route::get('api/users', array(
+	'as'=>'api.users', 'uses'=>'Illuminate3\Vedette\Controllers\AdminUsersController@getDatatable'
+));
 
 /*
 |--------------------------------------------------------------------------
@@ -108,6 +113,19 @@ Route::get(Config::get('vedette::vedette_settings.home_route'), array(
 | Login/Logout/Register Routes
 |--------------------------------------------------------------------------
 */
+// Confide routes
+//Route::get( 'user/create',                 'UserController@create');
+Route::post('user',                        'UserController@store');
+//Route::get( 'user/login',                  'UserController@login');
+//Route::post('user/login',                  'UserController@do_login');
+Route::get( 'user/confirm/{code}',         'UserController@confirm');
+//Route::get( 'user/forgot_password',        'UserController@forgot_password');
+//Route::post('user/forgot_password',        'UserController@do_forgot_password');
+Route::get( 'user/reset_password/{token}', 'UserController@reset_password');
+Route::post('user/reset_password',         'UserController@do_reset_password');
+//Route::get( 'user/logout',                 'UserController@logout');
+Route::get('/', array('before' => 'detectLang','uses' => 'BlogController@getIndex'));
+Route::get('/', array('as' => 'home', 'before' => 'detectLang','uses' => 'BlogController@getIndex'));
 
 Route::group(array(
 	'prefix' => Config::get('vedette::vedette_settings.prefix_auth')),
@@ -139,42 +157,50 @@ Route::group(array(
 // Login/Sign In
 	Route::get('login', array(
 		'as'   => 'vedette/login',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@login'
 	));
 	Route::post('login', array(
 		'as'   => 'vedette.login',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postLogin'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postLogin'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@do_login'
 	));
+/*
 	Route::get('/', array(
 		'as'   => 'vedette/login',
 		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
 	));
-
+*/
 // Logout/Sign Out
 	Route::get('logout', array(
 		'as'   => 'vedette.logout',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogout'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogout'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@logout'
 	));
 
 // Register/Sign Up
 	Route::get('register', array(
 		'as'   => 'vedette/register',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@create'
 	));
 
 	Route::post('register', array(
 		'as'   => 'vedette.register',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getConfirm'
 	));
 
 // Forgot Password
-	Route::get('forgot-password', array(
+	Route::get('forgot_password', array(
 		'as' => 'vedette.forgot-password',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPassword'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPassword'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@forgot_password'
 		));
-	Route::post('forgot-password', array(
+	Route::post('forgot_password', array(
 		'as' => 'vedette.forgot-password',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@do_forgot_password'
 		));
 
 // Forgot Password Confirmation

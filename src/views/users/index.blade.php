@@ -4,6 +4,7 @@
 @stop
 
 @section('js')
+<!--
 	<script type="text/javascript">
 		var oTable;
 		$(document).ready(function() {
@@ -11,7 +12,7 @@
 				"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
 				"sPaginationType": "bootstrap",
 				"oLanguage": {
-					"sLengthMenu": "_MENU_ records per page"
+					"sLengthMenu": "_MENU_"
 				},
 				"bProcessing": true,
 		        "bServerSide": true,
@@ -22,6 +23,7 @@
 			});
 		});
 	</script>
+-->
 @stop
 
 {{-- Web site Title --}}
@@ -37,6 +39,14 @@
 
 {{-- Content --}}
 @section('content')
+
+{{ Datatable::table()
+    	->addColumn($columns)
+	->setUrl(route('api.users'))
+	->setOptions('sPaginationType', 'bootstrap')
+	->render(Config::get('vedette::vedette_views.datatable'))
+}}
+
 	<div class="page-header">
 		<h3>
 			{{{ $title }}}
@@ -59,8 +69,6 @@
 			</tr>
 		</thead>
 		<tbody>
-		</tbody>
-	</table>
 			@foreach ($users as $user)
 			<tr>
 				<td>
@@ -71,6 +79,8 @@
 				</td>
 			</tr>
 			@endforeach
+		</tbody>
+	</table>
 @stop
 
 {{-- Scripts --}}
