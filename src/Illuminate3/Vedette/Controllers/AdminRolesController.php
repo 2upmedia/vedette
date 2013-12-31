@@ -233,7 +233,7 @@ class AdminRolesController extends AdminController {
      *
      * @return Datatables JSON
      */
-    public function getData()
+    public function getData111()
     {
         $roles = Role::select(array('roles.id',  'roles.name', 'roles.id as users', 'roles.created_at'));
 
@@ -250,5 +250,16 @@ class AdminRolesController extends AdminController {
 
         ->make();
     }
+
+
+	public function getDatatable()
+	{
+		return Datatable::collection(User::all(array('id','username')))
+		->showColumns('id', 'username')
+		->searchColumns('username')
+		->orderColumns('id','username')
+		->make();
+	}
+
 
 }

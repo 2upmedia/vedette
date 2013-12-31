@@ -115,7 +115,7 @@ Route::get(Config::get('vedette::vedette_settings.home_route'), array(
 */
 // Confide routes
 //Route::get( 'user/create',                 'UserController@create');
-Route::post('user',                        'UserController@store');
+//Route::post('user',                        'UserController@store');
 //Route::get( 'user/login',                  'UserController@login');
 //Route::post('user/login',                  'UserController@do_login');
 Route::get( 'user/confirm/{code}',         'UserController@confirm');
@@ -188,7 +188,7 @@ Route::group(array(
 	Route::post('register', array(
 		'as'   => 'vedette.register',
 //		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getConfirm'
+		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@store'
 	));
 
 // Forgot Password

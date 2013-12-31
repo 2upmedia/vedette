@@ -1,4 +1,8 @@
 @extends(Config::get('vedette::vedette_views.layout'))
+<!-- Javascripts -->
+{{ Basset::show('main.js') }}
+@section('js')
+@show
 
 @section('css')
 @stop
@@ -41,7 +45,7 @@
 @section('content')
 
 {{ Datatable::table()
-    	->addColumn($columns)
+	->addColumn('id','Name')
 	->setUrl(route('api.users'))
 	->setOptions('sPaginationType', 'bootstrap')
 	->render(Config::get('vedette::vedette_views.datatable'))

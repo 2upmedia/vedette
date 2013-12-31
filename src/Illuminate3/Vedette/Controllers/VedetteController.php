@@ -38,42 +38,57 @@ class VedetteController extends BaseController {
 		}
 	}
 
-    /**
-     * Stores new account
-     *
-     */
-    public function store()
-    {
-        $user = new User;
+	/**
+	 * Stores new account
+	 *
+	 */
+	public function store()
+	{
+		$user = new User;
 
-        $user->username = Input::get( 'username' );
-        $user->email = Input::get( 'email' );
-        $user->password = Input::get( 'password' );
+		$user->username = Input::get( 'username' );
+		$user->email = Input::get( 'email' );
+		$user->password = Input::get( 'password' );
 
-        // The password confirmation will be removed from model
-        // before saving. This field will be used in Ardent's
-        // auto validation.
-        $user->password_confirmation = Input::get( 'password_confirmation' );
+		// The password confirmation will be removed from model
+		// before saving. This field will be used in Ardent's
+		// auto validation.
+		$user->password_confirmation = Input::get( 'password_confirmation' );
 
-        // Save if valid. Password field will be hashed before save
-        $user->save();
+		// run passwords match check
+		if ( !empty($user->password) ) {
+			if ( $user->password != $user->password_confirmation ) {
+				// Redirect to the new user page
+				return Redirect::to('user/create')
+					->withInput(Input::except('password','password_confirmation'))
+					->with('error', Lang::get('admin/users/messages.password_does_not_match'));
+			}
+		}
 
-        if ( $user->id )
-        {
-            // Redirect with success message, You may replace "Lang::get(..." for your custom message.
-                        return Redirect::action('UserController@login')
-                            ->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
-        }
-        else
-        {
-            // Get validation errors (see Ardent package)
-            $error = $user->errors()->all(':message');
+		// Save if valid. Password field will be hashed before save
+		$user->save();
 
-                        return Redirect::action('UserController@create')
-                            ->withInput(Input::except('password'))
-                ->with( 'error', $error );
-        }
-    }
+		if ( $user->id )
+		{
+		// Redirect with success message, You may replace "Lang::get(..." for your custom message.
+//			return Redirect::action('UserController@login')
+//				->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
+			return Redirect::action('VedetteController@login')
+				->with('success', trans('lingos::auth.success.signup'));
+		}
+		else
+		{
+		// Get validation errors (see Ardent package)
+			$error = $user->errors()->all(':message');
+//			return Redirect::action('UserController@create')
+//				->withInput(Input::except('password'))
+//				->with( 'error', $error );
+			return Redirect::back()
+				->withInput(Input::except('password'))
+				->with( 'error', $error );
+
+		}
+	}
 
 	/**
 	 * Displays the login form
