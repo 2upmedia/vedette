@@ -2,6 +2,16 @@
 
 return array(
 
+/*
+|--------------------------------------------------------------------------
+| Package Settings
+|--------------------------------------------------------------------------
+|
+| Use package Notifications
+|
+*/
+'package_notifications' => true,
+
 'available_language' => array('en', 'pt', 'es'),
 
 /*
@@ -24,7 +34,9 @@ return array(
 */
 'vedette_settings' => array(
 	'prefix_auth'			=> 'auth',
-	'home_route'			=> '/',
+	'prefix_pass'			=> 'password',
+//	'prefix_register'		=> 'register',
+	'home'					=> '/',
 ),
 
 
@@ -44,14 +56,12 @@ return array(
 	'datatable'				=> 'vedette::datatable',
 	'datalist'				=> 'vedette::list',
 
-	// Following views won't probably be needed to be over ridden but just in case
-
 	// Auth views
 	'auth'					=> 'vedette::auth.index',
 	'login'					=> 'vedette::auth.login',
 	'register'				=> 'vedette::auth.register',
 	'forgot'				=> 'vedette::auth.forgot',
-	'forgot_confirm'		=> 'vedette::auth.forgot-password-confirm',
+	'reset'					=> 'vedette::auth.reset',
 
 	// Users views
 	'users_index'			=> 'vedette::users.index',

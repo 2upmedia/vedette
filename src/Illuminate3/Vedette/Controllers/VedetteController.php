@@ -1,13 +1,14 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
 use Illuminate3\Vedette\Models\User as User;
-use Entrust;
 use Confide;
 use View;
 use Config;
 use Input;
-use Redirect;
 use Lang;
+use Auth;
+use Redirect;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,9 @@ class VedetteController extends BaseController {
 	 */
 	public function create()
 	{
-		if ( Confide::user() ) {
+		if (Auth::check())
+		{
+//		if ( Auth::check() ) {
 		// If user is logged, redirect to internal
 		// page, change it to '/admin', '/dashboard' or something
 //			return Redirect::to('/');
@@ -73,7 +76,7 @@ class VedetteController extends BaseController {
 		// Redirect with success message, You may replace "Lang::get(..." for your custom message.
 //			return Redirect::action('UserController@login')
 //				->with( 'notice', Lang::get('confide::confide.alerts.account_created') );
-			return Redirect::action('VedetteController@login')
+			return Redirect::action('Illuminate3/Vedette/Controllers/VedetteController@login')
 				->with('success', trans('lingos::auth.success.signup'));
 		}
 		else
@@ -150,7 +153,8 @@ class VedetteController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-                        return Redirect::action('UserController@login')
+//                        return Redirect::action('Illuminate3/Vedette/Controllers/UserController@login')
+                        return Redirect::route('vedette/login')
                             ->withInput(Input::except('password'))
                 ->with( 'error', $err_msg );
         }

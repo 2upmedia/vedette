@@ -2,7 +2,7 @@
 
 //use Zizaco\Entrust\EntrustRole;
 //use Zizaco\Entrust\HasRole;
-use Illuminate3\Vedette\Models\User as User;
+//use Illuminate3\Vedette\Models\User as User;
 //use Entrust;
 
 /*

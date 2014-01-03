@@ -23,6 +23,8 @@ class VedetteServiceProvider extends ServiceProvider {
 		$this->package('illuminate3/vedette');
 		include __DIR__ .'/routes.php';
 		include __DIR__ .'/filters.php';
+//		include __DIR__ .'/Services/Handlers/UserEventHandler.php';
+//Event::subscribe('UserEventHandler');
 	}
 
 	/**
@@ -35,6 +37,15 @@ class VedetteServiceProvider extends ServiceProvider {
 		$this->registerInstallCommands();
 		$this->registerUserSeedCommands();
 		$this->commands('command.vedette.install','command.vedette.user');
+//		$this->app->singleton(
+		$this->app->bind(
+			'Illuminate3\Vedette\Repositories\User\UserRepository',
+			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository'
+//			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository',
+//			'Illuminate3\Vedette\Services\Handlers\UserEventHandler'
+		);
+//Event::subscribe('UserEventHandler');
+
 	}
 
 	/**

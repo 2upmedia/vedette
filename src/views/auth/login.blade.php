@@ -15,24 +15,24 @@
 
 {{-- Title --}}
 @section('title')
-	<i class="fa fa-sign-in fa-lg"></i>
+	<i class="fa fa-sign-in fa-lg fa-fw"></i>
 	{{ trans('lingos::auth.sign_in') }}
 @stop
 
 {{-- Content --}}
 @section('content')
 
-	@if ( Session::get('error') )
-		<div class="alert alert-danger">{{ Session::get('error') }}</div>
+	@if ( Config::get('vedette::package_notifications') )
+		@if ( Session::get('error') )
+			<div class="alert alert-danger alert-block">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				{{ Session::get('error') }}
+			</div>
+		@endif
 	@endif
-
-	@if ( Session::get('notice') )
-		<div class="alert">{{ Session::get('notice') }}</div>
-	@endif
-
 
 	{{ Form::open(array(
-		'url' => (Confide::checkAction('VedetteController@do_login')) ?: route('vedette.login'),
+		'route' => 'vedette.login',
 		'method' => 'POST',
 		'id' => 'login-form'
 		))
@@ -41,7 +41,7 @@
 
 	<div class="input-group margin-bottom-lg">
 		<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-		<input class="form-control" type="text" name="email" id="email" placeholder="{{ trans('lingos::general.email') }}" value="{{ Input::old('email') }}"  tabindex="1">
+		<input class="form-control" type="text" name="email" id="email" placeholder="{{ trans('lingos::general.email') }}" value="{{ Input::old('email') }}"  tabindex="1" autocorrect="off" autocapitalize="off">
 	</div>
 
 	<div class="input-group margin-bottom-md">
@@ -56,12 +56,12 @@
 		</label>
 	</div>
 
-	<div class="row btn-toolbar" role="toolbar">
+	<div class="" role="toolbar">
 		<button class="btn btn-lg btn-success btn-block" type="submit" tabindex="4">{{ trans('lingos::button.sign_in') }}</button>
 		<br>
-		<a class="btn btn-warning" href="{{{ route('vedette.home') }}}" tabindex="5"><i class="fa fa-minus-circle"></i>{{ trans('lingos::button.cancel') }}</a>
-		<a class="btn btn-primary" href="{{{ route('vedette.register') }}}" tabindex="6"><i class="fa fa-plus-circle"></i>{{ trans('lingos::button.register') }}</a>
-		<a class="btn btn-info" href="{{{ (Confide::checkAction('VedetteController@forgot_password')) ?: route('vedette.forgot-password') }}}" tabindex="7"><i class="fa fa-external-link"></i>{{ trans('lingos::button.forgot_password') }}</a>
+		<a class="btn btn-warning" href="{{ route('vedette.home') }}" tabindex="5"><i class="fa fa-minus-circle fa-fw"></i>{{ trans('lingos::button.cancel') }}</a>
+		<a class="btn btn-primary" href="{{ route('vedette.register') }}" tabindex="6"><i class="fa fa-plus-circle fa-fw"></i>{{ trans('lingos::button.register') }}</a>
+		<a class="btn btn-info" href="{{ route('vedette.forgot') }}" tabindex="7"><i class="fa fa-external-link fa-fw"></i>{{ trans('lingos::button.forgot_password') }}</a>
 	</div>
 
 	</fieldset>

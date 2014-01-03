@@ -1,4 +1,4 @@
-<?php namespace Illuminate3\Konto\Observers;
+<?php namespace Illuminate3\Vedette\Services\Observers;
 
 /**
  * Laravel

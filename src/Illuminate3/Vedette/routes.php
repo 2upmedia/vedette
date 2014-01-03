@@ -1,8 +1,5 @@
 <?php
 
-//use Zizaco\Entrust\EntrustRole;
-//use Zizaco\Entrust\HasRole;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -14,13 +11,13 @@
 |
 */
 
-/** ------------------------------------------
- *  Route model binding
- *  ------------------------------------------
- */
+
+/*
+|--------------------------------------------------------------------------
+| Route model binding
+|--------------------------------------------------------------------------
+*/
 Route::model('user', 'User');
-//Route::model('comment', 'Comment');
-//Route::model('post', 'Post');
 Route::model('role', 'Role');
 
 /*
@@ -31,6 +28,105 @@ Route::model('role', 'Role');
 Route::pattern('user', '[0-9]+');
 Route::pattern('role', '[0-9]+');
 Route::pattern('token', '[0-9a-z]+');
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('api/users', array(
+	'as'=>'api.users',
+	'uses'=>'Illuminate3\Vedette\Controllers\AdminUsersController@getDatatable'
+));
+
+
+/*
+|--------------------------------------------------------------------------
+| General Routes
+|--------------------------------------------------------------------------
+*/
+Route::get(Config::get('vedette::vedette_settings.home'), array(
+	'as' => 'vedette.home',
+	'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@index')
+);
+
+/*
+|--------------------------------------------------------------------------
+| Password Routes
+|--------------------------------------------------------------------------
+|
+| @ Package Config = password
+|
+*/
+Route::group(array(
+	'prefix' => Config::get('vedette::vedette_settings.prefix_pass')),
+	function()
+{
+// Forgot Password
+	Route::get('forgot', array(
+		'as' => 'vedette.forgot',
+		'uses' => 'Illuminate3\Vedette\Controllers\RemindersController@getRemind'
+		));
+	Route::post('forgot', array(
+'before' => 'csrf',
+		'as' => 'vedette.forgot',
+		'uses' => 'Illuminate3\Vedette\Controllers\RemindersController@postRemind'
+		));
+// Reset password
+	Route::get('reset/{token}', array(
+		'as' => 'vedette.reset',
+		'uses' => 'Illuminate3\Vedette\Controllers\RemindersController@getReset'
+		));
+	Route::post('reset/{token}', array(
+		'as' => 'vedette.reset',
+		'uses' => 'Illuminate3\Vedette\Controllers\RemindersController@postReset'
+		));
+});
+
+/*
+|--------------------------------------------------------------------------
+| Athorization Routes
+|--------------------------------------------------------------------------
+|
+| @ Package Config = auth
+|
+*/
+Route::group(array(
+	'prefix' => Config::get('vedette::vedette_settings.prefix_auth')),
+	function()
+{
+// Login/Sign In
+	Route::get('login', array(
+		'as'   => 'vedette.login',
+		'uses' => 'Illuminate3\Vedette\Controllers\AuthController@index'
+	));
+	Route::post('login', array(
+'before' => 'csrf',
+		'as'   => 'vedette.login',
+		'uses' => 'Illuminate3\Vedette\Controllers\AuthController@store'
+	));
+// Logout/Sign Out
+	Route::get('logout', array(
+		'as'   => 'vedette.logout',
+		'uses' => 'Illuminate3\Vedette\Controllers\AuthController@destroy'
+	));
+// Register/Sign Up
+	Route::get('register', array(
+		'as'   => 'vedette/register',
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@create'
+		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@index'
+	));
+
+	Route::post('register', array(
+'before' => 'csrf',
+		'as'   => 'vedette.register',
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
+//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@store'
+		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@store'
+	));
+
+});
 
 
 /*
@@ -68,15 +164,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 //	Route::controller('/', 'AdminDashboardController');
 });
 
-Route::get('api/users', array(
-	'as'=>'api.users', 'uses'=>'Illuminate3\Vedette\Controllers\AdminUsersController@getDatatable'
-));
 
-/*
-|--------------------------------------------------------------------------
-| Frontend Routes
-|--------------------------------------------------------------------------
-*/
+
+
 // User reset routes
 Route::get('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersController@getReset');
 // User password reset
@@ -103,10 +193,7 @@ Route::when('contact-us','detectLang');
 
 
 
-Route::get(Config::get('vedette::vedette_settings.home_route'), array(
-	'as' => 'vedette.home',
-	'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@index')
-);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -118,7 +205,7 @@ Route::get(Config::get('vedette::vedette_settings.home_route'), array(
 //Route::post('user',                        'UserController@store');
 //Route::get( 'user/login',                  'UserController@login');
 //Route::post('user/login',                  'UserController@do_login');
-Route::get( 'user/confirm/{code}',         'UserController@confirm');
+Route::get( 'user/confirm/{code}',         'Illuminate3\Vedette\Controllers\VedetteController@confirm');
 //Route::get( 'user/forgot_password',        'UserController@forgot_password');
 //Route::post('user/forgot_password',        'UserController@do_forgot_password');
 Route::get( 'user/reset_password/{token}', 'UserController@reset_password');
@@ -154,64 +241,9 @@ Route::group(array(
 		'before' => 'auth.vedette:groups.view'
 	));
 
-// Login/Sign In
-	Route::get('login', array(
-		'as'   => 'vedette/login',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@login'
-	));
-	Route::post('login', array(
-		'as'   => 'vedette.login',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postLogin'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@do_login'
-	));
-/*
-	Route::get('/', array(
-		'as'   => 'vedette/login',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogin'
-	));
-*/
-// Logout/Sign Out
-	Route::get('logout', array(
-		'as'   => 'vedette.logout',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getLogout'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@logout'
-	));
-
-// Register/Sign Up
-	Route::get('register', array(
-		'as'   => 'vedette/register',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@create'
-	));
-
-	Route::post('register', array(
-		'as'   => 'vedette.register',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@store'
-	));
-
-// Forgot Password
-	Route::get('forgot_password', array(
-		'as' => 'vedette.forgot-password',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPassword'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@forgot_password'
-		));
-	Route::post('forgot_password', array(
-		'as' => 'vedette.forgot-password',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPassword'
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@do_forgot_password'
-		));
 
 // Forgot Password Confirmation
-	Route::get('forgot-password/{passwordResetCode}', array(
-		'as' => 'vedette.forgot-password-confirm',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getForgotPasswordConfirm'
-		));
-	Route::post('forgot-password/{passwordResetCode}', array(
-		'as' => 'vedette.forgot-password/{passwordResetCode}',
-		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postForgotPasswordConfirm'
-		));
+//	Route::get('forgot-password/{passwordResetCode}', array(
 
 });
 

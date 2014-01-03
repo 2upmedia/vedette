@@ -1,4 +1,4 @@
-<?php
+<?php namespace Illuminate3\Vedette\Services\Presenters;
 
 use Robbo\Presenter\Presenter;
 
