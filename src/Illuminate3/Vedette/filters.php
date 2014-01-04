@@ -15,10 +15,14 @@
 | application. Here you may also register your custom route filters.
 |
 */
+//Event::subscribe('Illuminate3\Vedette\Services\Handlers\UserEventHandler');
 
 App::before(function($request)
 {
-	//
+	if ($request->ajax()) {
+		Debugbar::disable();
+	}
+//Event::fire('page.load', array(array('Path' => $request->path(), 'Headers' => $request->header())));
 });
 
 

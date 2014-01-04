@@ -6,7 +6,7 @@ use View;
 use Auth;
 use Input;
 use Redirect;
-
+use Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +45,7 @@ class AuthController extends BaseController {
 			return Redirect::route('vedette.home')
 				->with('warning', trans('lingos::auth.logged_in'));
 		}
+Event::fire('user.fire');
 		// User is not logged in so let's log them in
 		return View::make(Config::get('vedette::vedette_views.login'));
 	}

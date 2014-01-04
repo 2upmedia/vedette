@@ -11,6 +11,7 @@
 |
 */
 
+//Event::subscribe('Illuminate3\Vedette\Services\Handlers\UserEventHandler');
 
 /*
 |--------------------------------------------------------------------------

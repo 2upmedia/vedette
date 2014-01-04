@@ -7,7 +7,14 @@ class UserEventHandler
 		$events->listen('user.signup', 'UserEventHandler@onSignup');
 		$events->listen('user.login', 'UserEventHandler@onLogin');
 		$events->listen('user.refresh', 'UserEventHandler@onRefresh');
+		$events->listen('user.fire', 'UserEventHandler@onFire');
 	}
+
+	public function onFire()
+	{
+		dd('user signed up');
+	}
+
 
 	public function onSignup()
 	{
