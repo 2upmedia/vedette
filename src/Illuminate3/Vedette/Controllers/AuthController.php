@@ -45,7 +45,6 @@ class AuthController extends BaseController {
 			return Redirect::route('vedette.home')
 				->with('warning', trans('lingos::auth.logged_in'));
 		}
-Event::fire('user.fire');
 		// User is not logged in so let's log them in
 		return View::make(Config::get('vedette::vedette_views.login'));
 	}
@@ -60,9 +59,12 @@ Event::fire('user.fire');
 	// use email as login credential
 		if (Auth::attempt(array(
 			'email' => Input::get('email'),
-			'password' => Input::get('password')
+			'password' => Input::get('password'),
+			'confirmed' => 1
 			)))
 		{
+		// Fire event to update last_login in the Database
+			Event::fire('user.login', array(Auth::getUser()));
 		// login successful so send to "home" with message
 			return Redirect::intended(Config::get('vedette::vedette_settings.home'))
 				->with('success', trans('lingos::auth.success.login'));

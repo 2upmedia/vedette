@@ -68,6 +68,9 @@ class RegisterController extends BaseController {
 		// Redirect to "home" with message
 		if($save_user_data->isSaved())
 		{
+		// Fire event to update last_login in the Database
+			Event::fire('user.register', array(Auth::getEmail()));
+		// Then redirect
 			return Redirect::route('vedette.home')
 				->with('success', trans('lingos::auth.success.account'));
 		}
@@ -76,5 +79,30 @@ class RegisterController extends BaseController {
 			->withInput(Input::except('password', 'password_confirmation'))
 			->withErrors($save_user_data->errors());
 	}
+
+
+/*
+|--------------------------------------------------------------------------
+| Create Signup/Register Page
+|--------------------------------------------------------------------------
+*/
+    /**
+     * Attempt to confirm account with code
+     *
+     * @param  string  $code
+     */
+    public function getConfirm( $code )
+    {
+        if ( Confide::confirm( $code ) )
+        {
+            return Redirect::to('user/login')
+                ->with( 'notice', Lang::get('confide::confide.alerts.confirmation') );
+        }
+        else
+        {
+            return Redirect::to('user/login')
+                ->with( 'error', Lang::get('confide::confide.alerts.wrong_confirmation') );
+        }
+    }
 
 }

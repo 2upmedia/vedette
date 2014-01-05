@@ -24,8 +24,6 @@ class VedetteServiceProvider extends ServiceProvider {
 		include __DIR__ .'/routes.php';
 		include __DIR__ .'/filters.php';
 		include __DIR__ .'/listeners.php';
-//		include __DIR__ .'/Services/Handlers/UserEventHandler.php';
-//Event::subscribe('UserEventHandler');
 	}
 
 	/**
@@ -43,10 +41,7 @@ class VedetteServiceProvider extends ServiceProvider {
 //			'Illuminate3\Vedette\Repositories\StorageServiceProvider'
 			'Illuminate3\Vedette\Repositories\User\UserRepository',
 			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository'
-//			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository',
-//			'Illuminate3\Vedette\Services\Handlers\UserEventHandler'
 		);
-//Event::subscribe('UserEventHandler');
 
 	}
 

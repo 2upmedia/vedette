@@ -118,7 +118,6 @@ Route::group(array(
 //		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@create'
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@index'
 	));
-
 	Route::post('register', array(
 'before' => 'csrf',
 		'as'   => 'vedette.register',
@@ -126,7 +125,18 @@ Route::group(array(
 //		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@store'
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@store'
 	));
-
+// Reset password
+	Route::get('confirm/{token}', array(
+		'as' => 'vedette.reset',
+		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@getConfirm'
+		));
+/*
+	Route::post('confirm/{token}', array(
+'before' => 'csrf',
+		'as' => 'vedette.reset',
+		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@postConfirm'
+		));
+*/
 });
 
 

@@ -5,11 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePasswordRemindersTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
+/**
+ * Run the migrations.
+ *
+ * @return void
+ */
 	public function up()
 	{
 		Schema::create('password_reminders', function(Blueprint $table)
@@ -20,11 +20,11 @@ class CreatePasswordRemindersTable extends Migration {
 		});
 	}
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
+/**
+ * Reverse the migrations.
+ *
+ * @return void
+ */
 	public function down()
 	{
 		Schema::drop('password_reminders');

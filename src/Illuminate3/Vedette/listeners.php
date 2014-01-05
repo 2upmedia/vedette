@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 
-$subscriber = new Illuminate3\Vedette\Services\Subscribers\AuthSubscriber;
+$subscriber = new Illuminate3\Vedette\Services\Subscribers\UserSubscriber;
 Event::subscribe($subscriber);
 /*
 $subscriber = new Illuminate3\Vedette\Services\Subscribers\CoreSubscriber;
