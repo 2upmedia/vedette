@@ -1,4 +1,4 @@
-<?php namespace Zizaco\Confide;
+<?php namespace Illuminate3\Vedette\Services\Confide;
 
 use Illuminate\Auth\UserInterface;
 use LaravelBook\Ardent\Ardent;

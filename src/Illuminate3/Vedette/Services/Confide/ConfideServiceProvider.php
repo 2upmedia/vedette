@@ -1,4 +1,4 @@
-<?php namespace Zizaco\Confide;
+<?php namespace Illuminate3\Vedette\Services\Confide;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -32,7 +32,7 @@ class ConfideServiceProvider extends ServiceProvider {
 
         $this->registerConfide();
 
-        $this->registerCommands();   
+        $this->registerCommands();
     }
 
     /**

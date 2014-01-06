@@ -38,9 +38,10 @@ class VedetteServiceProvider extends ServiceProvider {
 		$this->commands('command.vedette.install','command.vedette.user');
 //		$this->app->singleton(
 		$this->app->bind(
-//			'Illuminate3\Vedette\Repositories\StorageServiceProvider'
 			'Illuminate3\Vedette\Repositories\User\UserRepository',
-			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository'
+			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository',
+			'Illuminate3\Vedette\Services\Confide\ConfideRepository',
+			'Illuminate3\Vedette\Services\Confide\ConfideEloquentRepository'
 		);
 
 	}
