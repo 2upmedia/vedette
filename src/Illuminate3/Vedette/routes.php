@@ -119,7 +119,7 @@ Route::group(array(
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@index'
 	));
 	Route::post('register', array(
-'before' => 'csrf',
+//'before' => 'csrf',
 		'as'   => 'vedette.register',
 //		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
 //		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@store'

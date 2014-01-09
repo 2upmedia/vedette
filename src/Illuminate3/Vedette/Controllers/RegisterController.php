@@ -6,7 +6,7 @@ use View;
 use Auth;
 use Input;
 use Redirect;
-
+use Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +22,8 @@ class RegisterController extends BaseController {
 */
 	protected $user;
 
-/*
-|--------------------------------------------------------------------------
-| Inject the User Repository
-|--------------------------------------------------------------------------
-*/
+	public static $app;
+
 	public function __construct(User $user)
 	{
 		$this->user = $user;
@@ -55,6 +52,7 @@ class RegisterController extends BaseController {
 		// run passwords match check
 		$check_password = Input::get( 'password' );
 		$check_password_confirmation = Input::get( 'password_confirmation' );
+
 		if ( !empty($check_password) ) {
 			if ( $check_password != $check_password_confirmation ) {
 			// Redirect to the new user page
@@ -64,16 +62,21 @@ class RegisterController extends BaseController {
 			}
 		}
 
-		$save_user_data = $this->user->create(Input::all());
+//		$save_user_data = $this->user->create(Input::all());
+		$save_user_data = Input::all();
+		$save_user_data['confirmation_code'] = md5( uniqid(mt_rand(), true) );
+
+		$save_user_data = $this->user->create($save_user_data);
+
 		// Redirect to "home" with message
-		if($save_user_data->isSaved())
-		{
-		// Fire event to update last_login in the Database
-			Event::fire('user.register', array(Auth::getEmail()));
+		if( $save_user_data->isSaved() ) {
+		// Fire event to send confirmation_code to the User
+			Event::fire('user.register', array(Auth::getUser()));
 		// Then redirect
 			return Redirect::route('vedette.home')
 				->with('success', trans('lingos::auth.success.account'));
 		}
+
 		// OOPS! got an error
 		return Redirect::route('vedette.register')
 			->withInput(Input::except('password', 'password_confirmation'))

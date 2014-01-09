@@ -14,6 +14,7 @@ class UserControllTable extends Migration {
 	{
 
 		Schema::create('user_controlls', function(Blueprint $table) {
+			$table->engine = 'InnoDB';
 			$table->increments('id');
 
 			$table->integer('user_id', 11);

@@ -31,12 +31,12 @@ class AuthController extends BaseController {
 	{
 		$this->user = $user;
 	}
-
+/*
 	public function __construct(ConfideRepository $confiderepo)
 	{
 		$this->confiderepo = $confiderepo;
 	}
-
+*/
 /*
 |--------------------------------------------------------------------------
 | create log in for user

@@ -18,7 +18,7 @@ class User extends Magniloquent implements UserInterface, RemindableInterface {
 	*
 	* @var array
 	*/
-	protected $fillable = array('username', 'first_name', 'last_name', 'email', "password");
+	protected $fillable = array('username', 'first_name', 'last_name', 'email', 'password', 'confirmation_code');
 
 	/**
 	* The attributes excluded from the model's JSON form.
@@ -50,34 +50,6 @@ class User extends Magniloquent implements UserInterface, RemindableInterface {
 
 
   /**
-   * Post relationship
-   */
-/*
-  public function posts()
-  {
-    return $this->hasMany('Post');
-  }
-*/
-  /**
-   * User following relationship
-   */
-/*
-  public function follow()
-  {
-    return $this->belongsToMany('User', 'user_follows', 'user_id', 'follow_id')->withTimestamps();;
-  }
-*/
-  /**
-   * User followers relationship
-   */
-/*
-  public function followers()
-  {
-    return $this->belongsToMany('User', 'user_follows', 'follow_id', 'user_id')->withTimestamps();;
-  }
-*/
-
-  /**
    * Factory
    */
   public static $factory = array(
@@ -86,19 +58,6 @@ class User extends Magniloquent implements UserInterface, RemindableInterface {
     'password' => 'string',
   );
 
-/*
-  public function feed()
-  {
-    $id = $this->id;
-
-   return Post::whereIn('user_id', function($query) use ($id)
-          {
-            $query->select('follow_id')
-                  ->from('user_follows')
-                  ->where('user_id', $id);
-          })->orWhere('user_id', $id)->get();
-  }
-*/
   /**
    * Auto purge redundant attributes
    *

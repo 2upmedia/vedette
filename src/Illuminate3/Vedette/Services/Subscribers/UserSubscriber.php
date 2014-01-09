@@ -3,7 +3,7 @@
 //use Config;
 use Carbon;
 use Auth;
-//use Eloquent;
+use Config;
 //use Illuminate3\Vedette\Models\User;
 //use User;
 use Event;
@@ -56,6 +56,17 @@ class UserSubscriber
 		$user->last_login = Carbon::now()->toDateTimeString();
 		$user->save();
 //		Event::fire('user.fire');
+	}
+
+
+	public function onRegister($user)
+	{
+
+		// on behalf or the config file we should send and email or not
+		if (Config::get('confide::signup_email') == true) {
+			$view = Config::get('confide::email_account_confirmation');
+			$this->sendEmail( 'confide::confide.email.account_confirmation.subject', $view, array('user' => $this) );
+		}
 	}
 
 

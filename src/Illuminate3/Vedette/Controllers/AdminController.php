@@ -9,9 +9,11 @@ class AdminController extends BaseController {
      */
     public function __construct()
     {
+/*
         parent::__construct();
         // Apply the admin auth filter
         $this->beforeFilter('admin-auth');
+*/
     }
 
 }
