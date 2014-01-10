@@ -2,9 +2,11 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
-use Magniloquent\Magniloquent\Magniloquent;
+use Eloquent;
+use DB;
+//use Magniloquent\Magniloquent\Magniloquent;
 
-class User extends Magniloquent implements UserInterface, RemindableInterface {
+class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	/**
 	* The database table used by the model.
@@ -27,10 +29,19 @@ class User extends Magniloquent implements UserInterface, RemindableInterface {
 	*/
 	protected $hidden = array('password');
 
+
+	/**
+	 * Indicates if the model should soft delete.
+	 *
+	 * @var bool
+	 */
+	protected $softDelete = true;
+
+
 	/**
 	* Validation rules
 	*/
-	public static $rules = array(
+	public static $rules1 = array(
 		"save" => array(
 			'username' => 'required',
 			'email' => 'required|email',
@@ -52,18 +63,19 @@ class User extends Magniloquent implements UserInterface, RemindableInterface {
   /**
    * Factory
    */
+/*
   public static $factory = array(
     'username' => 'string',
     'email' => 'email',
     'password' => 'string',
   );
-
+*/
   /**
    * Auto purge redundant attributes
    *
    * @var bool
    */
-  public $autoPurgeRedundantAttributes = true;
+//  public $autoPurgeRedundantAttributes = true;
 
   /**
    * Get the unique identifier for the user.
@@ -94,5 +106,13 @@ class User extends Magniloquent implements UserInterface, RemindableInterface {
   {
     return $this->email;
   }
+
+  public function getActivationCode($username)
+  {
+//$activationCode = DB::table('users')->select('username', 'email')->get();
+$activationCode = DB::table('users')->where('username', $username)->pluck('confirmation_code');
+    return $activationCode;
+  }
+
 
 }

@@ -1,10 +1,5 @@
 <?php namespace Illuminate3\Vedette\Services\Validators;
 
-//
-// @author Steve Montambeault
-// @link   http://stevemo.ca
-//
-
  use Validator;
  use Input;
 
@@ -14,7 +9,7 @@ abstract class ValidatorService {
      * Data to validate
      * @var array
      */
-    protected $data;
+    protected $input;
 
     /**
      * Validation Errors
@@ -42,9 +37,9 @@ abstract class ValidatorService {
      *
      * @param  array $data
      */
-    public function __construct(array $data = array())
+    public function __construct(array $input = array())
     {
-        $this->data = $data ?: Input::all();
+        $this->input = $input ?: Input::all();
     }
 
     /**
@@ -57,7 +52,7 @@ abstract class ValidatorService {
      */
     public function passes()
     {
-        $validation = Validator::make($this->data, static::$rules, static::$messages);
+        $validation = Validator::make($this->input, static::$rules, static::$messages);
 
         if ($validation->passes()) return true;
 
@@ -87,9 +82,9 @@ abstract class ValidatorService {
      *
      * @return array
      */
-    public function getData()
+    public function getInput()
     {
-        return $this->data;
+        return $this->input;
     }
 
 }

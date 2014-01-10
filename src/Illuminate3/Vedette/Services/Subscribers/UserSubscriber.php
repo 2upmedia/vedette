@@ -5,7 +5,7 @@ use Carbon;
 use Auth;
 use Config;
 //use Illuminate3\Vedette\Models\User;
-//use User;
+use Mail;
 use Event;
 
 /*
@@ -59,13 +59,30 @@ class UserSubscriber
 	}
 
 
-	public function onRegister($user)
+	public function onReset($user)
 	{
 
 		// on behalf or the config file we should send and email or not
 		if (Config::get('confide::signup_email') == true) {
 			$view = Config::get('confide::email_account_confirmation');
 			$this->sendEmail( 'confide::confide.email.account_confirmation.subject', $view, array('user' => $this) );
+		}
+	}
+
+
+	public function onRegister($user)
+	{
+
+		// on behalf or the config file we should send and email or not
+		if (Config::get('vedette::signup_email') == true) {
+			$view = Config::get('vedette::vedette_emails.email_confirmation');
+//			Mail::send( 'confide::confide.email.account_confirmation.subject', $view, array('user' => $this) );
+
+Mail::send($view, $user, function($message)
+{
+    $message->to('foo@example.com', 'John Smith')->subject('Welcome!');
+});
+
 		}
 	}
 

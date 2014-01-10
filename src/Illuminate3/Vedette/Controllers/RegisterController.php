@@ -7,6 +7,8 @@ use Auth;
 use Input;
 use Redirect;
 use Event;
+use Mail;
+use Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,10 +50,14 @@ class RegisterController extends BaseController {
 	public function store()
 	{
 
+$validation = $this->getValidationService('user');
+
+if( $validation->passes() ) {
+
 		// Still getting Used to magniloquent
 		// run passwords match check
-		$check_password = Input::get( 'password' );
-		$check_password_confirmation = Input::get( 'password_confirmation' );
+		$check_password = Input::get('password');
+		$check_password_confirmation = Input::get('password_confirmation');
 
 		if ( !empty($check_password) ) {
 			if ( $check_password != $check_password_confirmation ) {
@@ -63,25 +69,82 @@ class RegisterController extends BaseController {
 		}
 
 //		$save_user_data = $this->user->create(Input::all());
-		$save_user_data = Input::all();
-		$save_user_data['confirmation_code'] = md5( uniqid(mt_rand(), true) );
+		$user = Input::except('password', 'password_confirmation');
+		$user['password'] = Hash::make('secret');
+		$user['confirmation_code'] = md5( uniqid(mt_rand(), true) );
 
-		$save_user_data = $this->user->create($save_user_data);
+		$user = $this->user->create($user);
 
 		// Redirect to "home" with message
-		if( $save_user_data->isSaved() ) {
+		if( $user->save() ) {
 		// Fire event to send confirmation_code to the User
-			Event::fire('user.register', array(Auth::getUser()));
+//			Event::fire('user.register', array('email'=>Input::get('email')) );
+
+// Data to be used on the email view
+$data = array(
+	'username'          => Input::get('username'),
+	'confirmation_code' => $user->getActivationCode(Input::get('username')),
+	'confirmationUrl' => route('vedette.confirm', $user->getActivationCode(Input::get('username'))),
+);
+
+
+$view = Config::get('vedette::vedette_emails.email_register');
+/*
+Mail::send(
+	$view,
+	array(
+		'email' => Input::get('email'),
+		'username' => Input::get('username')
+		),
+	function($message) use ($user)
+	{
+    $message->to(Input::get('email'), Input::get('username'))->subject( trans('lingos::auth.registration') );
+});
+*/
+
+
+// Send the activation code through email
+Mail::send($view, $data, function($m) use ($user)
+{
+	$m->to($user->email, $user->username);
+	$m->subject(trans('lingos::auth.registration') . ' ' . $user->username);
+});
+
+
 		// Then redirect
 			return Redirect::route('vedette.home')
 				->with('success', trans('lingos::auth.success.account'));
 		}
-
+}
 		// OOPS! got an error
 		return Redirect::route('vedette.register')
 			->withInput(Input::except('password', 'password_confirmation'))
 			->withErrors($save_user_data->errors());
 	}
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Display the password reset view for the given token
+|--------------------------------------------------------------------------
+|
+| @param  string  $token
+| @return Response
+|
+*/
+	public function getConfirm($token = null)
+	{
+		if (is_null($token))
+		{
+			return Redirect::route('vedette.confirm')
+				->with('error', trans('lingos::auth.reminders.token'));
+		}
+		return View::make(Config::get('vedette::vedette_views.confirm'))
+			->withInput(Input::except('password', 'password_confirmation'))
+			->with('token', $token);
+	}
+
 
 
 /*
@@ -94,7 +157,7 @@ class RegisterController extends BaseController {
      *
      * @param  string  $code
      */
-    public function getConfirm( $code )
+    public function postConfirm( $code )
     {
         if ( Confide::confirm( $code ) )
         {

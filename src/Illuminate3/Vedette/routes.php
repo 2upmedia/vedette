@@ -113,30 +113,24 @@ Route::group(array(
 	));
 // Register/Sign Up
 	Route::get('register', array(
-		'as'   => 'vedette/register',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@getRegister'
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@create'
+		'as'   => 'vedette.register',
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@index'
 	));
 	Route::post('register', array(
 //'before' => 'csrf',
 		'as'   => 'vedette.register',
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@postRegister'
-//		'uses' => 'Illuminate3\Vedette\Controllers\VedetteController@store'
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@store'
 	));
-// Reset password
+// Confirm User
 	Route::get('confirm/{token}', array(
-		'as' => 'vedette.reset',
+		'as' => 'vedette/confirm',
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@getConfirm'
 		));
-/*
 	Route::post('confirm/{token}', array(
-'before' => 'csrf',
-		'as' => 'vedette.reset',
+//'before' => 'csrf',
+		'as' => 'vedette.confirm',
 		'uses' => 'Illuminate3\Vedette\Controllers\RegisterController@postConfirm'
 		));
-*/
 });
 
 
@@ -179,7 +173,7 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 
 
 // User reset routes
-Route::get('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersController@getReset');
+//Route::get('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersController@getReset');
 // User password reset
 Route::post('auth/reset/{token}', 'Illuminate3\Vedette\Controllers\UsersController@postReset');
 //:: User Account Routes ::

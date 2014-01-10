@@ -44,11 +44,10 @@ class BaseController extends Controller {
      * @param  array $inputs
      * @return Object
      */
-/*
     protected function getValidationService($service, array $inputs = array())
     {
         $class = '\\'.ltrim(Config::get("vedette::validation.{$service}"), '\\');
         return new $class($inputs);
     }
-*/
+
 }

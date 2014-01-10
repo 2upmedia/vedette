@@ -92,6 +92,10 @@ return array(
 
 ),
 
+'vedette_emails' => array(
+	'email_reset_password'	=> 'vedette::emails.passwordreset', // with $user and $token.
+	'email_register'	=> 'vedette::emails.register',
+),
 
     /*
     |--------------------------------------------------------------------------
@@ -120,26 +124,6 @@ return array(
     'login_cache_field' => 'email',
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Email Views
-    |--------------------------------------------------------------------------
-    |
-    | The VIEWS used to email messages for some Confide events:
-    |
-    | By default, the out of the box confide views are used
-    | but you can create your own forms and replace the view
-    | names here. For example
-    |
-    |  // To use app/views/email/confirmation.blade.php:
-    |
-    | 'email_account_confirmation' => 'email.confirmation'
-    |
-    |
-    */
-
-    'email_reset_password' =>       'confide::emails.passwordreset', // with $user and $token.
-    'email_account_confirmation' => 'confide::emails.confirm', // with $user
 
 
     /*

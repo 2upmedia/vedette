@@ -73,14 +73,22 @@
 		</div>
 	</fieldset>
 
+	<fieldset>
+	<legend><i class="fa fa-exclamation-triangle fa-fw"></i>{{ trans('lingos::auth.phrase') }}</legend>
+		<div class="input-group margin-bottom-md">
+			<span class="input-group-addon"><i class="fa fa-fire-extinguisher fa-fw"></i></span>
+			<input class="form-control" type="text" name="phrase" id="phrase" placeholder="{{ trans('lingos::auth.phrase_detail') }}" value="{{ Input::old('phrase') }}" tabindex="5">
+		</div>
+	</fieldset>
+
 	<hr>
 
 	<div class="" role="toolbar">
-		<button class="btn btn-lg btn-success btn-block" type="submit" tabindex="5">{{ trans('lingos::button.register') }}</button>
+		<button class="btn btn-lg btn-success btn-block" type="submit" tabindex="6">{{ trans('lingos::button.register') }}</button>
 		<br>
-		<a class="btn btn-warning" href="{{ route('vedette.home') }}" tabindex="6"><i class="fa fa-minus-circle fa-fw"></i>{{ trans('lingos::button.cancel') }}</a>
-		<button class="btn-inverse btn" type="reset" tabindex="7">{{ trans('lingos::button.reset') }}</button>
-		<a class="btn btn-info" href="{{ route('vedette.forgot') }}" tabindex="8"><i class="fa fa-external-link fa-fw"></i>{{ trans('lingos::button.forgot_password') }}</a>
+		<a class="btn btn-warning" href="{{ route('vedette.home') }}" tabindex="7"><i class="fa fa-minus-circle fa-fw"></i>{{ trans('lingos::button.cancel') }}</a>
+		<button class="btn-inverse btn" type="reset" tabindex="8">{{ trans('lingos::button.reset') }}</button>
+		<a class="btn btn-info" href="{{ route('vedette.forgot') }}" tabindex="9"><i class="fa fa-external-link fa-fw"></i>{{ trans('lingos::button.forgot_password') }}</a>
 	</div>
 
 	{{ Form::close() }}

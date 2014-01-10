@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordHintsTable extends Migration {
+class CreatePasswordPhrasesTable extends Migration {
 
 /**
  * Run the migrations.
@@ -12,14 +12,14 @@ class CreatePasswordHintsTable extends Migration {
  */
 	public function up()
 	{
-		Schema::create('password_hints', function(Blueprint $table)
+		Schema::create('password_phrases', function(Blueprint $table)
 		{
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 
 			$table->integer('user_id', 11);
 
-			$table->string('hint');
+			$table->string('phrase');
 
 			$table->softDeletes();
 			$table->timestamp('created_at');
@@ -33,7 +33,7 @@ class CreatePasswordHintsTable extends Migration {
  */
 	public function down()
 	{
-		Schema::drop('password_hints');
+		Schema::drop('password_phrases');
 	}
 
 }

@@ -23,6 +23,12 @@ public function find($id);
 
 public function delete($id);
 
+	/**
+	 * Get an activation code for the given user.
+	 *
+	 * @return string
+	 */
+	public function getActivationCode($user);
 
 /**
 * Save user
