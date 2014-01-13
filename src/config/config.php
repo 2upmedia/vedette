@@ -10,9 +10,18 @@ return array(
 | Use package Notifications
 |
 */
-'package_notifications' => true,
+'package_notifications' => true, // use vedette notifications or your own layout
+
+'require_confirmation'    => true, // use confimrations to signup/register
+'use_passphrase'    => true, // use a passphrase for password reminder and registeration
+'use_username'    => false, // choose this for only using username
+'use_email'    => true, // choose this for only using email
+
+
 
 'available_language' => array('en', 'pt', 'es'),
+'signup_email'      => true,
+'signup_confirm'    => true,
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +42,10 @@ return array(
 |--------------------------------------------------------------------------
 */
 'vedette_settings' => array(
-	'prefix_auth'			=> 'auth',
-	'prefix_pass'			=> 'password',
-//	'prefix_register'		=> 'register',
-	'home'					=> '/',
+	'prefix_auth'			=> 'auth', // used for routes
+	'prefix_pass'			=> 'password', // used for routes
+//	'prefix_register'		=> 'register', // used for routes
+	'home'					=> '/', // route used for going back to home
 ),
 
 
@@ -62,6 +71,7 @@ return array(
 	'register'				=> 'vedette::auth.register',
 	'forgot'				=> 'vedette::auth.forgot',
 	'reset'					=> 'vedette::auth.reset',
+	'confirm'				=> 'vedette::auth.confirm',
 
 	// Users views
 	'users_index'			=> 'vedette::users.index',
@@ -166,8 +176,6 @@ return array(
     | table, otherwise they will not be able to login after the payment.
     |
     */
-    'signup_email'      => true,
-    'signup_confirm'    => true,
 
 
 /*
@@ -179,7 +187,8 @@ return array(
 */
 
 'validation' => array(
-	'user'					=> 'Illuminate3\Vedette\Services\Validators\Users\Validator',
+//	'user'					=> 'Illuminate3\Vedette\Services\Validators\Users\Validator',
+	'user'					=> 'Illuminate3\Vedette\Services\Validators\Users',
 	'permission'			=> 'Illuminate3\Vedette\Services\Validators\Permissions\Validator',
 ),
 

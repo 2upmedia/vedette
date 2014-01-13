@@ -50,7 +50,7 @@ class RemindersController extends BaseController {
 		{
 			case Password::INVALID_USER:
 				return Redirect::back()
-					->with('error', trans('lingos::auth.reminders.user'));
+					->with('error', trans('lingos::auth.error.user'));
 			case Password::REMINDER_SENT:
 				return Redirect::route('vedette.home')
 					->with('info', trans('lingos::auth.reminders.sent'));
@@ -71,7 +71,7 @@ class RemindersController extends BaseController {
 		if (is_null($token))
 		{
 			return Redirect::route('vedette.forgot')
-				->with('error', trans('lingos::auth.reminders.token'));
+				->with('error', trans('lingos::auth.error.token'));
 		}
 		return View::make(Config::get('vedette::vedette_views.reset'))
 			->withInput(Input::except('password', 'password_confirmation'))
@@ -105,7 +105,7 @@ class RemindersController extends BaseController {
 					->with('success', trans('lingos::auth.reminders.reset'));
 			case Password::INVALID_TOKEN:
 				return Redirect::route('vedette.forgot')
-					->with('error', trans('lingos::auth.reminders.token'));
+					->with('error', trans('lingos::auth.error.token'));
 			case Password::INVALID_PASSWORD:
 				return Redirect::back()
 					->withInput(Input::except('password', 'password_confirmation'))
@@ -113,7 +113,7 @@ class RemindersController extends BaseController {
 			case Password::INVALID_USER:
 				return Redirect::back()
 					->withInput(Input::except('password', 'password_confirmation'))
-					->with('error', trans('lingos::auth.reminders.user'));
+					->with('error', trans('lingos::auth.error.user'));
 		}
 	}
 

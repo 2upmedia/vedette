@@ -7,11 +7,8 @@
 {{ trans('lingos::email.click_to_confirm') }}:</p>
 
 <p>
-<a href="{{ $confirmationUrl }}/{{ $confirmation_code }}">{{ $confirmationUrl }}</a>
+<a href="{{ $confirmationUrl }}">{{ $confirmationUrl }}</a>
 </p>
-
-{{ $confirmation_code }}
-{{{ $confirmation_code }}}
 
 <p>{{ trans('lingos::email.regards') }},</p>
 

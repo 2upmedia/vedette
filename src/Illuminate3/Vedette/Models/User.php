@@ -35,7 +35,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var bool
 	 */
-	protected $softDelete = true;
+	protected $softDelete = false;
 
 
 	/**
@@ -106,13 +106,5 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
   {
     return $this->email;
   }
-
-  public function getActivationCode($username)
-  {
-//$activationCode = DB::table('users')->select('username', 'email')->get();
-$activationCode = DB::table('users')->where('username', $username)->pluck('confirmation_code');
-    return $activationCode;
-  }
-
 
 }

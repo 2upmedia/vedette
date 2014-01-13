@@ -1,8 +1,6 @@
 <?php namespace Illuminate3\Vedette\Repositories\User;
 
-//use User;
 use Illuminate3\Vedette\Models\User as User;
-//use Illuminate3\Vedette\Models\User;
 
 class EloquentUserRepository implements UserRepository {
 
@@ -36,13 +34,40 @@ class EloquentUserRepository implements UserRepository {
 
     return $user->delete();
   }
-/*
-  public function feed()
-  {
-    $user = $this->find(\Auth::user()->id);
 
-    return $user->feed();
-  }
-*/
+
+
+/**
+ * Get the confirmation token
+ *
+ * @param string $token
+ */
+	public function confirmToken( $token )
+	{
+		return User::where('confirmation_code', '=', $token)->firstOrFail();
+	}
+
+	/**
+	 * Find a user based on email
+	 *
+	 * @param  string $email
+	 * @return User object
+	 */
+	public function getUserByMail( $email )
+	{
+		return User::where('email', '=', $email)->firstOrFail();
+	}
+
+	/**
+	 * Find a user's confirmation code based on username
+	 *
+	 * @param  string $username
+	 * @return User object
+	 */
+	public function getConfirmationCode( $username )
+	{
+		return User::where('username', $username)->pluck('confirmation_code');
+	}
+
 
 }

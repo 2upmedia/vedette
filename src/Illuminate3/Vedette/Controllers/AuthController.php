@@ -1,6 +1,7 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
-use Illuminate3\Vedette\Repositories\User\UserRepository as User;
+//use Illuminate3\Vedette\Repositories\User\UserRepository as User;
+use Illuminate3\Vedette\Repositories\User\UserRepository;
 use Config;
 use View;
 use Auth;
@@ -24,19 +25,19 @@ class AuthController extends BaseController {
 
 /*
 |--------------------------------------------------------------------------
-| Inject $user repoitory information into $this->user
+| User Repository
 |--------------------------------------------------------------------------
 */
+/*
 	public function __construct(User $user)
 	{
 		$this->user = $user;
 	}
-/*
-	public function __construct(ConfideRepository $confiderepo)
-	{
-		$this->confiderepo = $confiderepo;
-	}
 */
+	public function __construct(UserRepository $repository)
+	{
+		$this->repository = $repository;
+	}
 /*
 |--------------------------------------------------------------------------
 | create log in for user
@@ -44,8 +45,7 @@ class AuthController extends BaseController {
 */
 	public function index()
 	{
-		if (Auth::check())
-		{
+		if ( Auth::check() ) {
 		// user is logged in. Bounce them back to "home" with friendly message
 			return Redirect::route('vedette.home')
 				->with('warning', trans('lingos::auth.logged_in'));
@@ -61,15 +61,25 @@ class AuthController extends BaseController {
 */
 	public function store()
 	{
+	// choose which fields to verify based on config setting
+		if ( Config::get('vedette::use_email') ) {
+			$use_array = array(
+				'email' => Input::get('email'),
+				'password' => Input::get('password'),
+				'confirmed' => 1
+			);
+		} elseif ( Config::get('vedette::use_username') ) {
+			$use_array = array(
+				'username' => Input::get('username'),
+				'password' => Input::get('password'),
+				'confirmed' => 1
+			);
+		}
 	// use email as login credential
-		if (Auth::attempt(array(
-			'email' => Input::get('email'),
-			'password' => Input::get('password'),
-			'confirmed' => 1
-			)))
+		if ( Auth::attempt($use_array) )
 		{
 		// Fire event to update last_login in the Database
-			Event::fire('user.login', array(Auth::getUser()));
+			Event::fire( 'user.login', array(Auth::getUser()) );
 		// login successful so send to "home" with message
 			return Redirect::intended(Config::get('vedette::vedette_settings.home'))
 				->with('success', trans('lingos::auth.success.login'));

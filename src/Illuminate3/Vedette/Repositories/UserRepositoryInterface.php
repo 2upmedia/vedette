@@ -30,6 +30,14 @@ public function delete($id);
 	 */
 	public function getActivationCode($user);
 
+	/**
+	 * Set the user confirmation to true.
+	 *
+	 * @param string $code
+	 * @return bool
+	 */
+	public function confirmToken($token);
+
 /**
 * Save user
 *

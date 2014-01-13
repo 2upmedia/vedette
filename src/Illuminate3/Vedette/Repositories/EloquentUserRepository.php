@@ -49,6 +49,41 @@ class EloquentUserRepository implements UserRepositoryInterface {
   }
 
 
+	public function confirm($token)
+	{
+/* ----------------------------------------------------------------------------------------------------- */
+echo "<pre>";
+var_dump($token);
+echo "</pre>";
+exit();
+/* ----------------------------------------------------------------------------------------------------- */
+	}
+
+
+/**
+ * Set the user confirmation to true.
+ *
+ * @param string $code
+ * @return bool
+ */
+	public function confirm($token)
+	{
+/* ----------------------------------------------------------------------------------------------------- */
+echo "<pre>";
+var_dump($token);
+echo "</pre>";
+exit();
+/* ----------------------------------------------------------------------------------------------------- */
+$user = User::where('confirmation_code', '=', $token)->firstOrFail();
+
+//		$user = $this->model()->where('confirmation_code', '=', $token)->get()->first();
+		if( $user ) {
+			return $user->confirm();
+		} else {
+			return false;
+		}
+	}
+
 
 public function all()
 {
@@ -78,16 +113,7 @@ public function getActivationCode($user)
 
 $activationCode = DB::table('users')->where('username', '$username')->pluck('confirmation_code');
 
-/* ----------------------------------------------------------------------------------------------------- */
-echo "<pre>";
-var_dump($activationCode);
-echo "</pre>";
-exit();
-/* ----------------------------------------------------------------------------------------------------- */
-
-//return $this->where('username', '=', $username)->first();
-
-//	return $activationCode;
+	return $activationCode;
 }
 
 

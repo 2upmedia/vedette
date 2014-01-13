@@ -11,7 +11,31 @@ interface UserRepository {
   public function update($input);
 
   public function delete($id);
-/*
-  public function feed();
-*/
+
+
+	/**
+	 * Set the user confirmation to true.
+	 *
+	 * @param string $code
+	 * @return bool
+	 */
+	public function confirmToken( $token );
+
+	/**
+	 * Find a user by the given email
+	 *
+	 * @param  string $email The email to be used in the query
+	 * @return ConfideUser   User object
+	 */
+	public function getUserByMail( $email );
+
+
+	/**
+	 * Find a user by the given email
+	 *
+	 * @param  string $email The email to be used in the query
+	 * @return ConfideUser   User object
+	 */
+	public function getConfirmationCode( $username );
+
 }

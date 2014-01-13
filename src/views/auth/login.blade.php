@@ -39,10 +39,18 @@
 	}}
 	<fieldset>
 
+	@if ( Config::get('vedette::use_username') )
+	<div class="input-group margin-bottom-lg">
+		<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+		<input class="form-control" type="text" name="username" id="username" placeholder="{{ trans('lingos::general.username') }}" value="{{ Input::old('username') }}" tabindex="1" autocorrect="off" autocapitalize="off">
+	</div>
+	@endif
+	@if ( Config::get('vedette::use_email') )
 	<div class="input-group margin-bottom-lg">
 		<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
 		<input class="form-control" type="text" name="email" id="email" placeholder="{{ trans('lingos::general.email') }}" value="{{ Input::old('email') }}"  tabindex="1" autocorrect="off" autocapitalize="off">
 	</div>
+	@endif
 
 	<div class="input-group margin-bottom-md">
 		<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
@@ -50,7 +58,7 @@
 	</div>
 
 	<div class="checkbox margin-bottom-lg">
-		<label for="remember">{{ Lang::get('confide::confide.login.remember') }}
+		<label for="remember">{{ trans('lingos::auth.remember_me') }}
 			<input type="hidden" name="remember" value="0">
 			<input type="checkbox" name="remember" id="remember" value="1" tabindex="3">
 		</label>

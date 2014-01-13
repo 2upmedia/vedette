@@ -73,13 +73,15 @@
 		</div>
 	</fieldset>
 
-	<fieldset>
-	<legend><i class="fa fa-exclamation-triangle fa-fw"></i>{{ trans('lingos::auth.phrase') }}</legend>
-		<div class="input-group margin-bottom-md">
-			<span class="input-group-addon"><i class="fa fa-fire-extinguisher fa-fw"></i></span>
-			<input class="form-control" type="text" name="phrase" id="phrase" placeholder="{{ trans('lingos::auth.phrase_detail') }}" value="{{ Input::old('phrase') }}" tabindex="5">
-		</div>
-	</fieldset>
+	@if ( Config::get('vedette::use_passphrase') )
+		<fieldset>
+		<legend><i class="fa fa-exclamation-triangle fa-fw"></i>{{ trans('lingos::auth.phrase') }}</legend>
+			<div class="input-group margin-bottom-md">
+				<span class="input-group-addon"><i class="fa fa-fire-extinguisher fa-fw"></i></span>
+				<input class="form-control" type="text" name="phrase" id="phrase" placeholder="{{ trans('lingos::auth.phrase_detail') }}" value="{{ Input::old('phrase') }}" tabindex="5">
+			</div>
+		</fieldset>
+	@endif
 
 	<hr>
 

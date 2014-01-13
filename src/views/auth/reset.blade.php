@@ -47,10 +47,18 @@
 	<input type="hidden" name="token" value="{{{ $token }}}">
 	<fieldset>
 
-		<div class="input-group margin-bottom-md">
-			<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-			<input class="form-control" type="text" name="email" id="email" placeholder="{{ trans('lingos::general.email') }}" value="{{ Input::old('email') }}" tabindex="1">
-		</div>
+	@if ( Config::get('vedette::use_username') )
+	<div class="input-group margin-bottom-lg">
+		<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+		<input class="form-control" type="text" name="username" id="username" placeholder="{{ trans('lingos::general.username') }}" value="{{ Input::old('username') }}" tabindex="1" autocorrect="off" autocapitalize="off">
+	</div>
+	@endif
+	@if ( Config::get('vedette::use_email') )
+	<div class="input-group margin-bottom-lg">
+		<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+		<input class="form-control" type="text" name="email" id="email" placeholder="{{ trans('lingos::general.email') }}" value="{{ Input::old('email') }}"  tabindex="1" autocorrect="off" autocapitalize="off">
+	</div>
+	@endif
 
 		<div class="input-group margin-bottom-md">
 			<span class="input-group-addon"><i class="fa fa-unlock-o fa-fw"></i></span>

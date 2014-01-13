@@ -14,13 +14,12 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "illuminate3/lingos": "dev-master"
     },
     "autoload": {
         "classmap": [
-            "src/database/migrations",
-            "src/Illuminate3/Services/Handlers"
+            "src/database/migrations"
         ],
         "psr-0": {
             "Illuminate3\\Vedette": "src/"

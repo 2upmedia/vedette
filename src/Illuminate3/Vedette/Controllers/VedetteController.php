@@ -22,6 +22,12 @@ use Redirect;
 
 class VedetteController extends BaseController {
 
+	public function confirm($token)
+	{
+		return $this->user->confirm($token);
+	}
+
+
 	/**
 	 * Displays the form for account creation
 	 *
@@ -165,7 +171,7 @@ class VedetteController extends BaseController {
      *
      * @param  string  $code
      */
-    public function confirm( $code )
+    public function confirm1( $code )
     {
         if ( Confide::confirm( $code ) )
         {
