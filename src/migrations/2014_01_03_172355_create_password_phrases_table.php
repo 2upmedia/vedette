@@ -17,9 +17,9 @@ class CreatePasswordPhrasesTable extends Migration {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 
-			$table->integer('user_id', 11);
+			$table->integer('user_id')->index();
 
-			$table->string('phrase');
+			$table->string('phrase')->index();
 
 			$table->softDeletes();
 			$table->timestamp('created_at');

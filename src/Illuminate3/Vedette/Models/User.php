@@ -106,5 +106,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
   {
     return $this->email;
   }
+/**
+ * Retrieve data from Account_names table
+ *
+ * @var string
+ */
+public function passwordPhrase()
+{
+	return $this->hasOne('Illuminate3\Konto\Models\PasswordPhrase');
+}
+
+public function userGovernor()
+{
+	return $this->hasOne('Illuminate3\Konto\Models\UserGovernor');
+}
 
 }

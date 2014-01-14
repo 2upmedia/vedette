@@ -19,7 +19,6 @@
     },
     "autoload": {
         "classmap": [
-            "src/database/migrations"
         ],
         "psr-0": {
             "Illuminate3\\Vedette": "src/"

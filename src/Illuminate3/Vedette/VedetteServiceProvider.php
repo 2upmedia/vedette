@@ -20,7 +20,7 @@ class VedetteServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('illuminate3/vedette');
+		$this->package('illuminate3/vedette', 'vedette');
 		include __DIR__ .'/routes.php';
 		include __DIR__ .'/filters.php';
 		include __DIR__ .'/listeners.php';

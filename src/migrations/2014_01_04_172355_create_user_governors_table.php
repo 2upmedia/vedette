@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class UserControllTable extends Migration {
+class CreateUserGovernorsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,11 +13,11 @@ class UserControllTable extends Migration {
 	public function up()
 	{
 
-		Schema::create('user_controlls', function(Blueprint $table) {
+		Schema::create('user_governors', function(Blueprint $table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 
-			$table->integer('user_id', 11);
+			$table->integer('user_id')->index();
 
 			$table->string('ip_address')->nullable();
 
@@ -41,7 +41,7 @@ class UserControllTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('environs_usage_types');
+		Schema::drop('user_governors');
 	}
 
 }
