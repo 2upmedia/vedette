@@ -1,8 +1,6 @@
 <?php namespace Illuminate3\Vedette\Controllers;
 
-//use Cribbb\Storage\User\UserRepository as User;
 use Illuminate3\Vedette\Repositories\User\UserRepository;
-//use Illuminate3\Vedette\Repositories\User\UserRepository as User;
 use View;
 use Config;
 use Redirect;
@@ -12,40 +10,27 @@ use Event;
 
 class UserController extends BaseController {
 
-  /**
-   * User Repository
-   */
-  protected $user;
+	protected $user;
 
-  /**
-   * Inject the User Repository
-   */
-/*
-  public function __construct(User $user)
-  {
-    $this->user = $user;
-  }
-*/
+	/**
+	* User Repository
+	*/
 	public function __construct(UserRepository $repository)
 	{
 		$this->repository = $repository;
 	}
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return Response
-   */
-  public function index()
-  {
-
+	/**
+	* Display a listing of the resource.
+	*
+	* @return Response
+	*/
+	public function index()
+	{
 		return View::make(Config::get('vedette::vedette_views.users_index'), [
 			'users' => $this->repository->all()
-//		]);
 		], compact('users'));
-
-//    return $this->user->all();
-  }
+	}
 
   /**
    * Show the form for creating a new resource.

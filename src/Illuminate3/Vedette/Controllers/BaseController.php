@@ -3,13 +3,17 @@
 use Controller;
 use View;
 use Config;
-
-//use Zizaco\Entrust\EntrustRole;
-//use Zizaco\Entrust\HasRole;
 use Auth;
+//use Efficiently\AuthorityController\ControllerAdditions;
 
 class BaseController extends Controller {
 
+/*
+public function __construct()
+{
+	$this->loadAndAuthorizeResource();
+}
+*/
 	/**
 	 * Initializer.
 	 *

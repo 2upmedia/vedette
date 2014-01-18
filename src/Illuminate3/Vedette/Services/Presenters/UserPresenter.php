@@ -1,9 +1,24 @@
 <?php namespace Illuminate3\Vedette\Services\Presenters;
 
-use Robbo\Presenter\Presenter;
+use McCool\LaravelAutoPresenter\BasePresenter;
+use Illuminate3\Vedette\Models\User as User;
 
-class UserPresenter extends Presenter
+class UserPresenter extends BasePresenter
 {
+
+protected $user;
+
+	public function __construct(User $user)
+	{
+		$this->presenter = $user;
+	}
+
+	public function created_at()
+	{
+		return date('m-d-y', strtotime($this->presenter->created_at));
+	}
+
+
 
     public function isActivated()
     {
@@ -33,17 +48,6 @@ class UserPresenter extends Presenter
     public function displayDate()
     {
         return date('m-d-y', strtotime($this->created_at));
-    }
-
-    /**
-     * Returns the date of the user creation,
-     * on a good and more readable format :)
-     *
-     * @return string
-     */
-    public function created_at()
-    {
-        return String::date($this->created_at);
     }
 
     /**

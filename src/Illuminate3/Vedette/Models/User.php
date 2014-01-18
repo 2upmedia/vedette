@@ -4,7 +4,6 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Eloquent;
 use DB;
-//use Magniloquent\Magniloquent\Magniloquent;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
@@ -20,7 +19,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	*
 	* @var array
 	*/
-	protected $fillable = array('username', 'first_name', 'last_name', 'email', 'password', 'confirmation_code');
+	protected $fillable = array('username', 'first_name', 'last_name', 'email', 'password', 'confirmation_code', 'created_at');
+
+	public $presenter = 'Illuminate3\Vedette\Services\Presenters\UserPresenter';
 
 	/**
 	* The attributes excluded from the model's JSON form.

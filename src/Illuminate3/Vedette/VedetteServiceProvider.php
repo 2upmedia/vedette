@@ -41,7 +41,11 @@ class VedetteServiceProvider extends ServiceProvider {
 			'Illuminate3\Vedette\Repositories\User\UserRepository',
 			'Illuminate3\Vedette\Repositories\User\EloquentUserRepository'
 		);
-
+/*
+		$this->app->bind(
+			'Illuminate3\Vedette\Services\Presenters\User\UserPresenter'
+		);
+*/
 	}
 
 	/**
