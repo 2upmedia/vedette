@@ -1,11 +1,22 @@
 <?php namespace Illuminate3\Vedette\Models;
 
-use Zizaco\Entrust\EntrustRole;
-use Robbo\Presenter\PresentableInterface;
+//use Zizaco\Entrust\EntrustRole;
+//use Robbo\Presenter\PresentableInterface;
 use Eloquent;
 
-class Role extends EntrustRole implements PresentableInterface
+//class Role extends EntrustRole implements PresentableInterface
+//class Role extends Eloquent implements PresentableInterface
+class Role extends Eloquent
 {
+
+	public function user()
+	{
+return $this->belongsTo('Illuminate3\Vedette\Models\User');
+//	    return $this->hasOne('Account');
+	}
+
+
+
 
     /**
      * Same presenter as the user model.

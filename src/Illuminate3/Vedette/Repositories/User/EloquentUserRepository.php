@@ -6,7 +6,15 @@ class EloquentUserRepository implements UserRepository {
 
   public function all()
   {
-    return User::all();
+	return User::
+//	with('accountname', 'accountaddress')
+//	with('accountname')
+//	with('accountaddress')
+//	with('roles', 'permission', 'passwordphrase', 'usergovernor')
+//	with('roles', 'permissions')
+	with('roles', 'passwordphrase')
+	->get();
+//    return User::all();
   }
 
   public function find($id)

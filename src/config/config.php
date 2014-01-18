@@ -44,6 +44,7 @@ return array(
 'vedette_settings' => array(
 	'prefix_auth'			=> 'auth', // used for routes
 	'prefix_pass'			=> 'password', // used for routes
+	'prefix_admin'			=> 'admin', // used for routes
 //	'prefix_register'		=> 'register', // used for routes
 	'home'					=> '/', // route used for going back to home
 ),

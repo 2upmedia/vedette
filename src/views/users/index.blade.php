@@ -1,62 +1,31 @@
 @extends(Config::get('vedette::vedette_views.layout'))
-<!-- Javascripts -->
-{{ Basset::show('main.js') }}
-@section('js')
-@show
 
+{{-- Include Page CSS --}}
 @section('css')
 @stop
 
+{{-- Include Page JS --}}
 @section('js')
-<!--
-	<script type="text/javascript">
-		var oTable;
-		$(document).ready(function() {
-				oTable = $('#users').dataTable( {
-				"sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
-				"sPaginationType": "bootstrap",
-				"oLanguage": {
-					"sLengthMenu": "_MENU_"
-				},
-				"bProcessing": true,
-		        "bServerSide": true,
-		        "sAjaxSource": "{{ URL::to('admin/users/data') }}",
-		        "fnDrawCallback": function ( oSettings ) {
-	           		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-	     		}
-			});
-		});
-	</script>
--->
 @stop
 
-{{-- Web site Title --}}
+{{-- Browser Title --}}
 @section('page_title')
 	- {{ trans('lingos::auth.sign_in') }}
 @stop
 
+{{-- Title --}}
 @section('title')
-	<i class="fa fa-sign-in fa-lg"></i>
+	<i class="fa fa-sign-in fa-lg fa-fw"></i>
 	{{ trans('lingos::auth.sign_in') }}
-	{{{ $title }}} :: @parent
 @stop
 
 {{-- Content --}}
 @section('content')
 
-{{ Datatable::table()
-	->addColumn('id','Name')
-	->setUrl(route('api.users'))
-	->setOptions('sPaginationType', 'bootstrap')
-	->render(Config::get('vedette::vedette_views.datatable'))
-}}
-
 	<div class="page-header">
 		<h3>
-			{{{ $title }}}
-
 			<div class="pull-right">
-				<a href="{{{ URL::to('admin/users/create') }}}" class="btn btn-small btn-info iframe"><span class="glyphicon glyphicon-plus-sign"></span> Create</a>
+				<a href="{{ URL::to('admin/users/create') }}" class="btn btn-small btn-info iframe"><span class="glyphicon glyphicon-plus-sign"></span> Create</a>
 			</div>
 		</h3>
 	</div>
@@ -68,7 +37,7 @@
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.email') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.roles') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('admin/users/table.activated') }}}</th>
-				<th class="col-md-2">{{{ Lang::get('admin/users/table.created_at') }}}</th>
+				<th class="col-md-2">{{{ Lang::get('admin/users/table.passwordphrase') }}}</th>
 				<th class="col-md-2">{{{ Lang::get('table.actions') }}}</th>
 			</tr>
 		</thead>
@@ -80,6 +49,17 @@
 				</td>
 				<td>
 					{{ $user->email }}
+				</td>
+				<td>
+					@foreach($user->roles as $role)
+						{{ $role->name }}
+					@endforeach
+				</td>
+				<td>
+					{{ $user->confirmed }}
+				</td>
+				<td>
+					{{ $user->passwordphrase->phrase }}
 				</td>
 			</tr>
 			@endforeach

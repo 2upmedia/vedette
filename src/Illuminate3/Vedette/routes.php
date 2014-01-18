@@ -102,7 +102,7 @@ Route::group(array(
 		'uses' => 'Illuminate3\Vedette\Controllers\AuthController@index'
 	));
 	Route::post('login', array(
-'before' => 'csrf',
+//'before' => 'csrf',
 		'as'   => 'vedette.login',
 		'uses' => 'Illuminate3\Vedette\Controllers\AuthController@store'
 	));
@@ -138,8 +138,13 @@ Route::group(array(
 |--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
+|
+| @ Package Config = admin
+|
 */
-Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
+Route::group(array(
+	'prefix' => Config::get('vedette::vedette_settings.prefix_admin')),
+	function()
 {
 
 	# User Management
@@ -151,8 +156,9 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 	Route::controller('users', 'Illuminate3\Vedette\Controllers\AdminUsersController');
 	Route::get('users', array(
 		'as'     => 'vedette.admin-users',
-		'uses'   => 'Illuminate3\Vedette\Controllers\AdminUsersController@getIndex',
-		'before' => 'auth.vedette:users.view'
+//		'uses'   => 'Illuminate3\Vedette\Controllers\AdminUsersController@getIndex',
+		'uses'   => 'Illuminate3\Vedette\Controllers\UserController@index',
+//		'before' => 'auth.vedette:users.view'
 	));
 
 

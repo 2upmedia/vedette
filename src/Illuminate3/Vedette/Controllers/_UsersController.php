@@ -19,7 +19,7 @@ use Cartalyst\Sentry\Users\LoginRequiredException;
 use Cartalyst\Sentry\Users\PasswordRequiredException;
 
 
-class UsersController extends BaseController {
+class UsersController1111 extends BaseController {
 
     /**
      * Show all the users

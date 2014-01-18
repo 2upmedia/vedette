@@ -3,6 +3,12 @@
 //use Cribbb\Storage\User\UserRepository as User;
 use Illuminate3\Vedette\Repositories\User\UserRepository;
 //use Illuminate3\Vedette\Repositories\User\UserRepository as User;
+use View;
+use Config;
+use Redirect;
+use Lang;
+use Input;
+use Event;
 
 class UserController extends BaseController {
 
@@ -14,10 +20,16 @@ class UserController extends BaseController {
   /**
    * Inject the User Repository
    */
+/*
   public function __construct(User $user)
   {
     $this->user = $user;
   }
+*/
+	public function __construct(UserRepository $repository)
+	{
+		$this->repository = $repository;
+	}
 
   /**
    * Display a listing of the resource.
@@ -26,7 +38,13 @@ class UserController extends BaseController {
    */
   public function index()
   {
-    return $this->user->all();
+
+		return View::make(Config::get('vedette::vedette_views.users_index'), [
+			'users' => $this->repository->all()
+//		]);
+		], compact('users'));
+
+//    return $this->user->all();
   }
 
   /**

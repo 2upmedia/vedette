@@ -1,9 +1,19 @@
 <?php namespace Illuminate3\Vedette\Models;
 
-use Zizaco\Entrust\EntrustPermission;
+//use Zizaco\Entrust\EntrustPermission;
+use Eloquent;
 
-class Permission extends EntrustPermission
+//class Permission extends EntrustPermission
+class Permission extends Eloquent
 {
+
+	public function user()
+	{
+return $this->belongsTo('Illuminate3\Vedette\Models\User');
+//	    return $this->hasOne('Account');
+	}
+
+
     public function preparePermissionsForDisplay($permissions)
     {
         // Get all the available permissions

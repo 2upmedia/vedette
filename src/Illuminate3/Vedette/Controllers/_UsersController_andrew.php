@@ -2,7 +2,7 @@
 
 use User;
 
-class UsersController extends BaseController {
+class UsersController1111 extends BaseController {
 
     /**
      * User Model

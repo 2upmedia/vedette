@@ -113,12 +113,34 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
  */
 public function passwordPhrase()
 {
-	return $this->hasOne('Illuminate3\Konto\Models\PasswordPhrase');
+	return $this->hasOne('Illuminate3\Vedette\Models\PasswordPhrase');
 }
 
 public function userGovernor()
 {
-	return $this->hasOne('Illuminate3\Konto\Models\UserGovernor');
+	return $this->hasOne('Illuminate3\Vedette\Models\UserGovernor');
 }
 
+
+public function roles() {
+	return $this->belongsToMany('Illuminate3\Vedette\Models\Role');
+//	return $this->belongsToMany('Illuminate3\Vedette\Models\Role', 'role_user');
+//	return $this->belongsToMany('Illuminate3\Vedette\Models\Role', 'role_user')->withPivot('name');;
 }
+
+public function permissions() {
+	return $this->hasMany('Illuminate3\Vedette\Models\Permission');
+}
+
+public function hasRole($key) {
+	foreach($this->roles as $role){
+		if($role->name === $key)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+
+} // end of model/User
